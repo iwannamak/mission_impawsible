@@ -1,4 +1,6 @@
+<?php include 'server.php';?>
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
   <!-- Theme Made By www.w3schools.com -->
@@ -10,7 +12,9 @@
   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  
   <style>
+  
   body {
     font: 400 15px Lato, sans-serif;
     line-height: 1.8;
@@ -243,17 +247,17 @@
   <h2 style="text-transform: none;">Login Form</h2>
   <form>
     <div class="form-group">
-      <label for="email">Email:</label>
-      <input type="email" class="form-control" id="email" placeholder="Enter email">
+      <label for="username">Username:</label>
+      <input type="username" class="form-control" name="username" id="username" placeholder="Enter username">
     </div>
     <div class="form-group">
       <label for="pwd">Password:</label>
-      <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+      <input type="password" class="form-control" name="psw_1" id="pwd_1" placeholder="Enter password">
     </div>
     <div class="checkbox">
       <label><input type="checkbox"> Remember me</label>
     </div>
-    <button type="button" class="btn btn-default">Login</button>
+    <button type="button" name="login_user" id="login_user" class="btn btn-default">Login</button>
     <button type="button" class="btn btn-default"><a href="file:///C:/xampp/htdocs/mission_impawsible/register_xr.html?">I don't have an account</a></button>
     <button type="button" class="btn btn-link">I forgot my password</button>
   </form>
