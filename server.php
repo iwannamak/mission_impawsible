@@ -14,7 +14,7 @@ $errors = array();
 
 //Connect to DB with SQLi
 
-$db = mysqli_connect('localhost','root','','web_test') or die("Could not connect to database");
+$db = mysqli_connect('localhost','root','','db_mimp') or die("Could not connect to database");
 
 //Register users
 if(isset($_POST['reg_user'])) 
@@ -92,13 +92,13 @@ if(!$uppercase || !$lowercase || !$number || !$specialChars || strlen($password_
 if(isset($_POST['login_user']))
 {
     $username = mysqli_real_escape_string($db, $_POST['username']);
-    $password = mysqli_real_escape_string($db, $_POST['password_1']);
+    $password = mysqli_real_escape_string($db, $_POST['psw_1']);
     
     if(empty($username))
     {
         array_push($errors,"Username is required");
     }
-    if(empty($password))
+    if(empty($psw_1))
     {
         array_push($errors,"Password is required");
     }
