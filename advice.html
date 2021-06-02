@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Mission ImPAWssible Forum</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<style>
+    body {
+    font: 400 15px Lato, sans-serif;
+    line-height: 1.8;
+    color: #818181;
+    margin-top:20px;
+    text-align: left;
+  }
+  h2 {
+    font-size: 24px;
+    text-transform: uppercase;
+    color: #303030;
+    font-weight: 600;
+    margin-bottom: 30px;
+  }
+  h4 {
+    font-size: 19px;
+    line-height: 1.375em;
+    color: #303030;
+    font-weight: 400;
+    margin-bottom: 30px;
+  } 
+
+.btn-default
+ 
+{
+ 
+background-color: #fff;
+ 
+color:#e90247;
+ 
+border-color: #e90247;
+ 
+} 
+
+.navbar {
+    height: 270px;
+    margin-bottom: 0;
+    background-color: #fff;
+    z-index: 9999;
+    border: 0;
+    font-size: 20px !important;
+    line-height: 1.42857143 !important;
+    letter-spacing: 4px;
+    border-radius: 0;
+    font-family: Montserrat, sans-serif;
+  }
+ .navbar li a, .navbar .navbar-brand {
+    color: rgb(0, 0, 0) !important;
+    right: 2px;
+  } 
+  .navbar-nav li a:hover, .navbar-nav li.active a {
+    color: #e90247 !important;
+    background-color: #fff !important;
+  }
+  .navbar-default .navbar-toggle {
+    border-color: transparent;
+    color: rgb(14, 4, 4) !important;
+  }
+
+.nav .show>.nav-link.nav-link-faded, .nav-link.nav-link-faded.active, .nav-link.nav-link-faded:active, .nav-pills .nav-link.nav-link-faded.active, .navbar-nav .show>.nav-link.nav-link-faded {
+    color: #e90247;
+    background-color: #fff;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: #e90247;
+}
+.nav-link.has-icon {
+    display: flex;
+    align-items: center;
+}
+.nav-link.active {
+    color: #e90247;
+}
+.nav-pills .nav-link {
+    border-radius: .25rem;
+}
+.nav-link {
+    color: #4a5568;
+}
+body{margin-top:20px;}
+.home-blog {
+    padding-top: 80px;
+    padding-bottom: 80px;
+}
+@media (min-width: 992px) {
+    .home-blog {
+        padding-top: 100px;
+        padding-bottom: 100px;
+    }
+}
+.home-blog .section-title {
+    padding-bottom: 15px;
+}
+.home-blog .media {
+    margin-top: 50px;
+}
+@media (min-width: 768px) {
+    .home-blog .media {
+        margin-top: 30px;
+    }
+}
+.bg-sand {
+    background-color: #f5f5f6;
+}
+.media.blog-media {
+    margin-top: 30px;
+    position: relative;
+    display: block;
+}
+@media (min-width: 992px) {
+    .media.blog-media {
+        display: table;
+    }
+}
+.media.blog-media .circle {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.5);
+    white-space: nowrap;
+    position: absolute;
+    padding: 0;
+    top: 20px;
+    left: 20px;
+    text-align: center;
+    box-shadow: none;
+    transform: translateX(0);
+    color: #fff;
+    transition: background-color 0.3s ease;
+}
+.media.blog-media .circle .day {
+    color: #fff;
+    transition: color 0.25s ease;
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 1;
+    margin-top: 12px;
+}
+.media.blog-media .circle .month {
+    text-transform: uppercase;
+    font-size: 14px;
+}
+.media.blog-media > a {
+    position: relative;
+    display: block;
+}
+@media (min-width: 992px) {
+    .media.blog-media > a {
+        display: table-cell;
+        vertical-align: top;
+        min-width: 200px;
+    }
+}
+@media (min-width: 1200px) {
+    .media.blog-media > a {
+        min-width: 230px;
+    }
+}
+.media.blog-media > a:before {
+    position: absolute;
+    content: "";
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+    opacity: 0;
+    transform: scale(0);
+    transition: transform 0.3s ease, opacity 0.3s;
+    background:  #e90247;
+;
+}
+.media.blog-media > a img {
+    width: 100%;
+}
+.media.blog-media:hover > a:before {
+    opacity: 1;
+    transform: scale(1);
+}
+.media.blog-media:hover .circle {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+.media.blog-media:hover .circle .day,
+.media.blog-media:hover .circle .month {
+    color: #222;
+}
+.media.blog-media:hover .media-body h5 {
+    color: #e90247;
+}
+.media.blog-media:hover .media-body a.post-link {
+    color: #e90247;
+    text-decoration: underline;
+}
+.media.blog-media .media-body {
+    border: 1px solid #efeff3;
+    padding: 30px 30px 10px;
+    font-size: 14px;
+    background: #fff;
+    border-top: none;
+}
+@media (min-width: 992px) {
+    .media.blog-media .media-body {
+        padding: 15px 20px 10px;
+        border-top: 1px solid #efeff3;
+        border-left: none;
+        display: table-cell;
+        vertical-align: top;
+    }
+}
+@media (min-width: 1200px) {
+    .media.blog-media .media-body {
+        padding: 30px 20px 10px;
+    }
+}
+.media.blog-media .media-body h5 {
+    transition: color 0.3s ease;
+    margin-bottom: 15px;
+}
+@media (min-width: 992px) {
+    .media.blog-media .media-body h5 {
+        font-size: 15px;
+    }
+}
+@media (min-width: 1200px) {
+    .media.blog-media .media-body h5 {
+        margin-bottom: 15px;
+        font-size: 18px;
+    }
+}
+.media.blog-media .media-body a.post-link {
+    display: block;
+    color: #222;
+    font-size: 11px;
+    padding: 23px 0;
+    text-transform: uppercase;
+    font-weight: 400;
+}
+@media (min-width: 992px) {
+    .media.blog-media .media-body a.post-link {
+        padding: 7px 0;
+    }
+}
+@media (min-width: 1200px) {
+    .media.blog-media .media-body a.post-link {
+        padding: 23px 0;
+    }
+}
+.media.blog-media .media-body ul {
+    position: relative;
+    padding: 10px 0 0;
+}
+.media.blog-media .media-body ul li {
+    display: inline-block;
+    width: 49%;
+    position: relative;
+}
+.media.blog-media .media-body ul li:before {
+    position: absolute;
+    content: "";
+    top: 5px;
+    left: 0;
+    width: 1px;
+    height: 14px;
+    background: #eeeef2;
+}
+.media.blog-media .media-body ul li:first-child:before {
+    visibility: hidden;
+}
+.media.blog-media .media-body ul:before {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: #eeeef2;
+}
+</style>
+</head>
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+
+    <nav class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="mipstart.html"><img style="height: 250px; width: 250px" src="./src/missionbw.png"></a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav navbar-right">
+          <li><a href="mipstart.html">Αρχική</a></li>
+          <li><a href="#about">Ποιοι είμαστε</a></li>
+          <li><a href="#login">Εγγραφή/Σύνδεση</a></li>
+          <ul class="nav navbar-nav">
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#more">Περισσότερα
+              <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="advice.html">Χρήσιμες συμβουλές</a></li>
+                <li><a href="#vets">Κτηνίατροι</a></li>
+                <li><a href="#trainers">Εκπαιδευτές</a></li>
+                <li><a href="#donations">Δωρεές</a></li>
+                <li><a href="forum.html">Forum</a></li>
+              </ul>
+            </li> 
+          </ul>
+          </ul>
+        </div>
+        <form class="navbar-form navbar-right" action="./src/action_page.php">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search">
+          </div>
+          <button type="submit" class="btn btn-default">Search</button>
+        </form>
+      </div>
+    </nav>
+
+    <section class="home-blog bg-sand">
+        <div class="container">
+            <!-- section title -->
+            <div class="row justify-content-md-center">
+                <div class="col-xl-5 col-lg-6 col-md-8">
+                    <div class="section-title text-center title-ex1">
+                        <h2>Χρήσιμες συμβουλές</h2>
+                        <p>Μέσα από τα άρθρα για τα κατοικιδιά σας θα προσπαθήσουμε να ρίξουμε λίγο φως σε σημεία και πλευρές λιγότερο φωτισμένες.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- section title ends -->
+            <div class="row ">
+                <div class="col-md-6">
+                    <div class="media blog-media">
+                      <a href="blog-post-left-sidebar.html"><img class="d-flex" src="./src/cardog.jpg" alt="Generic placeholder image"></a>
+                      <div class="circle">
+                          <h5 class="day">14</h5>
+                          <span class="month">sep</span>
+                      </div>
+                      <div class="media-body">
+                        <a href=""><h5 class="mt-0">Πώς να συνηθίσει ο σκύλος το αυτοκίνητο</h5></a>
+                        Τα σκυλιά μπορεί να είναι ένας εξαιρετικός σύντροφος και στα ταξίδια με το αυτοκίνητο. Μα πριν φουλάρετε βενζίνη...
+                        
+                        <a href="blog-post-left-sidebar.html" class="post-link">Read More</a>
+                        <ul>
+                            <li>by: Patra's Trainers</li>
+                        </ul>
+                      </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="media blog-media">
+                      <a href="blog-post-left-sidebar.html"><img class="d-flex" src="./src/newdog.jpg" alt="Generic placeholder image"></a>
+                      <div class="circle">
+                            <h5 class="day">12</h5>
+                            <span class="month">jan</span>
+                        </div>
+                      <div class="media-body">
+                        <a href=""><h5 class="mt-0">Δεύτερος σκύλος στο σπίτι - Πώς να γνωριστούν δύο σκυλιά</h5></a>
+                        δεύτερος σκύλος στο σπίτι είναι ένα χαρμόσυνο νέο για τους ανθρώπους ή τον άνθρωπο που πήρε την απόφαση. Αλλά...
+                        <a href="blog-post-left-sidebar.html" class="post-link">Read More</a>
+                        <ul>
+                            <li>by: Γιάννης Παπαδόπουλος</li>
+                        </ul>
+                      </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="media blog-media">
+                      <a href="blog-post-left-sidebar.html"><img class="d-flex" src="./src/bed.jpg" alt="Generic placeholder image"></a>
+                      <div class="circle">
+                            <h5 class="day">09</h5>
+                            <span class="month">feb</span>
+                        </div>
+                      <div class="media-body">
+                        <a href=""><h5 class="mt-0">Να γιατί τα σκυλιά σκάβουν το κρεβάτι τους
+                        </h5></a>
+                        Η συμπεριφορά του σκύλου πολλές φορές φαίνεται λίγο περίεργη στους ανθρώπους. Μια από αυτές τις περίεργες συμπεριφορές...
+                        <a href="blog-post-left-sidebar.html" class="post-link">Read More</a>
+                        <ul>
+                            <li>by: Α' Κτηνιατρική Κλινική Πατρών</li>
+                        </ul>
+                      </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="media blog-media">
+                      <a href="blog-post-left-sidebar.html"><img class="d-flex" src="./src/lick.jpg" alt="Generic placeholder image"></a>
+                      <div class="circle">
+                            <h5 class="day">04</h5>
+                            <span class="month">mar</span>
+                        </div>
+                      <div class="media-body">
+                        <a href=""><h5 class="mt-0">7 λόγοι που οι γάτες γλείφονται συνέχεια</h5></a>
+                        Οι γάτες περνούν το 50% του χρόνου τους γλείφοντας το σώμα τους. Ας δούμε παρακάτω τους 7 βασικότερους λόγους...
+                        <a href="blog-post-left-sidebar.html" class="post-link">Read More</a>
+                        <ul>
+                            <li>by: Α' Κτηνιατρική Κλινική Πατρών</li>
+                        </ul>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
