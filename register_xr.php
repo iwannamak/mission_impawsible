@@ -424,12 +424,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <div class="form-group">
                 <label>Phone</label>
                 <input type="text" name="phone" class="form-control <?php echo (!empty($phone_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $phone; ?>">
-                <span class="invalid-feedback"><?php echo $phone; ?></span>
+                <span class="invalid-feedback"><?php echo $phone_err; ?></span>
             </div>
             <div class="form-group">
                 <label>Address</label>
                 <input type="text" name="address" class="form-control <?php echo (!empty($address_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $address; ?>">
-                <span class="invalid-feedback"><?php echo $address; ?></span>
+                <span class="invalid-feedback"><?php echo $address_err; ?></span>
             </div>
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Submit">
