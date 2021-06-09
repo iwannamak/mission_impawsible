@@ -352,13 +352,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#myPage"><img style="height: 250px; width: 250px" src="./src/missionbw.png"><p style="font-size: 25pt">Mission ImPAWssible</p></a>
+        <a class="navbar-brand" href="mipstart.html"><img style="height: 250px; width: 250px" src="./src/missionbw.png"><p style="font-size: 25pt">Mission ImPAWssible</p></a>
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav navbar-right">
-        <li><a href="#myPage">Αρχική</a></li>
-        <li><a href="#about">Ποιοι είμαστε</a></li>
-        <li><a href="login.html">Εγγραφή/Σύνδεση</a></li>
+        <li><a href="mipstart.html">Αρχική</a></li>
+        <li><a href="mipstart.html">Ποιοι είμαστε</a></li>
+        <li><a href="login.php">Εγγραφή/Σύνδεση</a></li>
         <ul class="nav navbar-nav">
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#more">Περισσότερα
@@ -438,9 +438,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <p>Already have an account? <a href="login.php">Login here</a>.</p>
         </form>
         <br>
-    <p>Αν θέλετε να καταχωρείτε αγγελίες σκύλων προς υιοθεσία παρακαλούμε να κάνετε πρώτα <b>Εγγραφή</b>.
-    <br>
-    <br>Αν είστε φιλοζωική οργάνωση παρακαλούμε εγγραφείτε ακολουθώντας το σύνδεσμο <button type="submit" class="btn btn-link"><a href="file:///C:/xampp/htdocs/mission_impawsible/register_fil.html?">«<b>Εγγραφή Φιλοζωικής</b>» </a> </button>, ενώ αν είστε ιδιώτης παρακαλούμε εγγραφείτε ακολουθώντας το σύνδεσμο <button type="submit" class="btn btn-link"><a href="file:///C:/xampp/htdocs/mission_impawsible/register_xr.html?">«<b>Εγγραφή Ιδιώτη</b>» </a> </button>.</p>
+    <br>Αν είστε φιλοζωική οργάνωση παρακαλούμε εγγραφείτε ακολουθώντας το σύνδεσμο <button type="submit" class="btn btn-link"><a href="http://localhost/mission_impawsible/register_fil.php">«<b>Εγγραφή Φιλοζωικής</b>» </a> </button>, ενώ αν είστε ιδιώτης παρακαλούμε εγγραφείτε ακολουθώντας το σύνδεσμο <button type="submit" class="btn btn-link"><a href="http://localhost/mission_impawsible/register_xr.php">«<b>Εγγραφή Ιδιώτη</b>» </a> </button>.</p>
   
     </div>    
 </body>
