@@ -8,24 +8,17 @@ define('DB_NAME', 'db_mimp');
 $db = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME) or die("Could not connect to database");
  
 // Define variables and initialize with empty values
-$firstname = $lastname = $username = $email = $password = $confirm_password = $phone = $address = "";
-$firstname_err = $lastname_err = $username_err = $email_err = $password_err = $confirm_password_err = $phone_err = $address_err = "";
+$shelter_name = $username = $email = $password = $confirm_password = $phone = $address = "";
+$shelter_name_err = $username_err = $email_err = $password_err = $confirm_password_err = $phone_err = $address_err = "";
 
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     
-    if(empty(trim($_POST["firstname"]))){
-        $firstname_err = "Please enter your first name.";     
+    if(empty(trim($_POST["shelter_name"]))){
+        $shelter_name_err = "Please enter the shelter's name.";     
     } 
     else{
-        $firstname = trim($_POST["firstname"]);
-    }
-
-    if(empty(trim($_POST["lastname"]))){
-        $lastname_err = "Please enter your last name.";     
-    } 
-    else{
-        $lastname = trim($_POST["lastname"]);
+        $shelter_name = trim($_POST["shelter_name"]);
     }
 
     // Validate username
@@ -35,7 +28,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $username_err = "Username can only contain letters, numbers, and underscores.";
     } else{
         // Prepare a select statement
-        $sql = "SELECT id FROM user WHERE username = ?";
+        $sql = "SELECT animal_id FROM animal_shelter WHERE username = ?";
         
         if($stmt = mysqli_prepare($db, $sql)){
             // Bind variables to the prepared statement as parameters
@@ -104,18 +97,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     
     // Check input errors before inserting in database
-    if(empty($firstname_err) && empty($lastname_err) && empty($username_err) && empty($email_err) && empty($password_err) && empty($confirm_password_err) && empty($phone_err) && empty($address_err)){
+    if(empty($shelter_name_err) && empty($username_err) && empty($email_err) && empty($password_err) && empty($confirm_password_err) && empty($phone_err) && empty($address_err)){
         
         // Prepare an insert statement
-        $sql = "INSERT INTO user (firstname, lastname, username, email, password, phone, address) VALUES (?,?,?,?,?,?,?)";
+        $sql = "INSERT INTO animal_shelter (shelter_name, username, email, password, phone, address) VALUES (?,?,?,?,?,?)";
          
         if($stmt = mysqli_prepare($db, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "sssssss", $param_firstname, $param_lastname, $param_username, $param_email, $param_password, $param_phone, $param_address);
+            mysqli_stmt_bind_param($stmt, "ssssss", $param_shelter_name, $param_username, $param_email, $param_password, $param_phone, $param_address);
             
             // Set parameters
-            $param_firstname = $firstname;
-            $param_lastname = $lastname;
+            $param_shelter_name = $shelter_name;
             $param_username = $username;
             $param_email = $email;
             $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
@@ -392,15 +384,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <p>Συμπληρώστε τη φόρμα και πατήστε Εγγραφή στο τέλος της φόρμας. </p>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div class="form-group">
-                <label>First Name</label>
-                <input type="text" name="firstname" class="form-control <?php echo (!empty($firstname_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $firstname; ?>">
-                <span class="invalid-feedback"><?php echo $firstname_err; ?></span>
-            </div>
-            <div class="form-group">
-                <label>Last name</label>
-                <input type="text" name="lastname" class="form-control <?php echo (!empty($lastname_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $lastname; ?>">
-                <span class="invalid-feedback"><?php echo $lastname_err; ?></span>
-            </div>    
+                <label>Επωνυμία Φιλοζωικής</label>
+                <input type="text" name="shelter_name" class="form-control <?php echo (!empty($shelter_name_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $shelter_name; ?>">
+                <span class="invalid-feedback"><?php echo $shelter_name_err; ?></span>
+            </div>   
             <div class="form-group">
                 <label>Username</label>
                 <input type="username" name="username" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
