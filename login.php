@@ -1,9 +1,125 @@
-<?php include 'server.php'?>
+<?php 
+
+session_start();
+
+define('DB_SERVER', 'localhost');
+define('DB_USERNAME', 'root');
+define('DB_PASSWORD', '');
+define('DB_NAME', 'db_mimp');
+
+$db = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME) or die("Could not connect to database");
+
+if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
+  header("location: mipstart.html");
+  echo '1';
+  exit;
+}
+
+//Define Login Variables + Error Variables.
+$username = $password = "";
+$username_err = $password_err = $login_err = "";
+
+//SQL Statements
+
+//$sql = "SELECT id, username, password FROM users WHERE username = ?";
+
+// Processing form data when form is submitted
+if($_SERVER["REQUEST_METHOD"] == "POST")
+{
+  echo '2';
+  // Check if username is empty
+  if(empty(trim($_POST["username"]))){
+      $username_err = "Please enter username.";
+      echo '3';
+  } else{
+      $username = trim($_POST["username"]);
+      echo '4';
+  }
+
+  // Check if password is empty
+  if(empty(trim($_POST["password"])))
+  {
+    $password_err = "Please enter your password.";
+    echo '5';
+  } else
+  {
+    $password = trim($_POST["password"]);
+    echo '6';
+  }
+
+  // Validate credentials
+  if(empty($username_err) && empty($password_err))
+  {
+    echo '7';
+    $sql = "SELECT id, username, password FROM user WHERE username = ?";
+    if($stmt = mysqli_prepare($db, $sql))
+    {
+      mysqli_stmt_bind_param($stmt, "s", $param_username);
+      echo '8';
+
+      // Set parameters
+      $param_username = $username;
+
+      // Attempt to execute the prepared statement
+      if(mysqli_stmt_execute($stmt))
+      {
+        // Store result
+        mysqli_stmt_store_result($stmt);
+        echo '9';
+
+        // Check if username exists, if yes then verify password
+        if(mysqli_stmt_num_rows($stmt) == 1)
+        {                    
+          // Bind result variables
+          mysqli_stmt_bind_result($stmt, $id, $username, $hashed_password);
+          echo '10';
+
+          if(mysqli_stmt_fetch($stmt))
+          {
+            if(password_verify($password, $hashed_password))
+            {
+                // Password is correct, so start a new session
+                session_start();
+                echo '11';
+                // Store data in session variables
+                $_SESSION["loggedin"] = true;
+                $_SESSION["id"] = $id;
+                $_SESSION["username"] = $username;                            
+                
+                // Redirect user to welcome page
+                header("location: mipstart.html");
+                echo '12';
+            } 
+            else
+            {
+                // Password is not valid, display a generic error message
+                $login_err = "Invalid username or password.";
+            }
+          }
+        } 
+        else
+        {
+          // Username doesn't exist, display a generic error message
+          $login_err = "Invalid username or password.";
+        }
+      } 
+      else
+      {
+        echo "Oops! Something went wrong. Please try again later.";
+      }
+      // Close statement
+      mysqli_stmt_close($stmt);
+    }
+  }
+
+  // Close connection
+  mysqli_close($db);
+}
+?>
 <!DOCTYPE html>
 
 <html lang="en">
 <head>
-  <?php include 'server.php';?>
   <!-- Theme Made By www.w3schools.com -->
   <title>Mission ImPAWssible</title>
   <meta charset="utf-8">
@@ -203,9 +319,7 @@
   }
   </style>
 </head>
-<?php include 'server.php'?>
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
-  <?php include 'server.php'?>
   <nav class="navbar navbar-default">
     <div class="container">
       <div class="navbar-header">
@@ -251,20 +365,23 @@
 <div class="container">
   <br>
   <h2 style="text-transform: none;">Login Form</h2>
-  <form>
+  <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
     <div class="form-group">
       <label for="username">Username:</label>
-      <input type="username" class="form-control" name="username" id="username" placeholder="Enter username">
+      <input type="text" name="username" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
+        <span class="invalid-feedback"><?php echo $username_err; ?></span>
     </div>
     <div class="form-group">
       <label for="pwd">Password:</label>
-      <input type="password" class="form-control" name="psw_1" id="pwd_1" placeholder="Enter password">
+      <input type="password" name="password" placeholder="Enter Password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $password; ?>">
+      <span class="invalid-feedback"><?php echo $password_err; ?></span>
     </div>
     <div class="checkbox">
       <label><input type="checkbox"> Remember me</label>
     </div>
-    <button type="button" name="login_user" id="login_user" class="btn btn-default">Login</button>
-    <button type="button" class="btn btn-default"><a href="file:///C:/xampp/htdocs/mission_impawsible/register_xr.html?">I don't have an account</a></button>
+    <input type="submit" class="btn btn-primary" value="Login">
+    <span class="invalid-feedback"><?php echo $login_err; ?></span>
+    <button type="button" class="btn btn-default"><a href="file:///C:/xampp/htdocs/mission_impawsible/register_xr.php">I don't have an account</a></button>
     <button type="button" class="btn btn-link">I forgot my password</button>
   </form>
 </div>
