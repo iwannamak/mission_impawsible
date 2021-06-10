@@ -254,7 +254,7 @@ border-color: #e90247;
       </div>
       <div class="form-group">
         <label for="age">Ηλικία</label>
-        <input type="number" class="form-control" id="InputName1" placeholder="Enter age">
+        <input type="number" class="form-control" id="InputAge1" placeholder="Enter age">
       </div>
       <div class="form-group">
         <label for="sex">Φύλο</label>
@@ -265,12 +265,36 @@ border-color: #e90247;
       </div>
       <div class="form-group">
         <label for="race">Ράτσα</label>
-        <input type="text" class="form-control" id="InputName1" placeholder="Enter race">
+        <input type="text" class="form-control" id="InputRace1" placeholder="Enter race">
       </div>
       <div class="form-group">
         <label for="color">Χρώμα</label>
-        <input type="color" class="form-control" id="InputName1" placeholder="Enter color">
-      </div>      
+        <select  name="dropdown" class="form-control" id="color">
+            <option value="white">Άσπρο</option>
+            <option value="black">Μαύρο</option>
+            <option value="grey">Γκρι</option>
+            <option value="brown">Καφέ</option>
+            <option value="black_white">Ασπρόμαυρο</option>
+        </select>
+      </div>  
+      <div class="form-group">
+        <label for="place">Περιοχή</label>
+        <select  name="dropdown" class="form-control" id="place">
+            <option value="Ανατολική Μακεδονία και Θράκη">Ανατολική Μακεδονία και Θράκη</option>
+            <option value="Κεντρική Μακεδονία">Κεντρική Μακεδονία</option>
+            <option value="Δυτική Μακεδονία">Δυτική Μακεδονία</option>
+            <option value="Ήπειρος">Ήπειρος</option>
+            <option value="Θεσσαλία">Θεσσαλία</option>
+            <option value="Ιόνιοι Νήσοι">Ιόνιοι Νήσοι</option>
+            <option value="Δυτική Ελλάδα">Δυτική Ελλάδα</option>
+            <option value="Στερεά Ελλάδα">Στερεά Ελλάδα</option>
+            <option value="Αττική">Αττική</option>
+            <option value="Πελοπόννησος">Πελοπόννησος</option>
+            <option value="Βόρειο Αιγαίο">Βόρειο Αιγαίο</option>
+            <option value="Νότιο Αιγαίο">Νότιο Αιγαίο</option>
+            <option value="Κρήτη">Κρήτη</option>
+        </select>
+      </div>  
       <div class="form-group">
         <label for="size">Μέγεθος</label>
         <select  name="dropdown" class="form-control" id="size">
@@ -281,7 +305,11 @@ border-color: #e90247;
       </div>
       <div class="form-group">
         <label for="health_problems">Προβλήματα Υγείας</label>
-        <input type="text" class="form-control" id="InputName1" placeholder="Enter Health Problems">
+        <input type="text" class="form-control" id="InputH1" placeholder="Enter Health Problems">
+      </div>
+      <div class="form-group">
+        <label for="description">Περιγραφή</label>
+        <input type="text" class="form-control" id="InputDescription1" placeholder="Enter Description">
       </div>
 
       <button type="submit" class="btn btn-primary">Αποστολή</button>
