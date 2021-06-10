@@ -8,13 +8,13 @@ define('DB_PASSWORD', '');
 define('DB_NAME', 'db_mimp');
 
 $db = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME) or die("Could not connect to database");
-
+/*
 if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
   header("location: mipstart.html");
   echo '1';
   exit;
 }
-
+*/
 //Define Login Variables + Error Variables.
 $username = $password = "";
 $username_err = $password_err = $login_err = "";
@@ -115,6 +115,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
   // Close connection
   mysqli_close($db);
 }
+
+
+
+
+
 ?>
 <!DOCTYPE html>
 
