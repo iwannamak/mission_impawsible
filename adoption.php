@@ -242,6 +242,9 @@ $age = $sex = $size = "";
             </ul>
           </li> 
         </ul>
+        <a href="logout.php" class="btn btn-info">
+        <span class="glyphicon glyphicon-log-out"></span> Log out
+      </a>
         </ul>
       </div>
       <form class="navbar-form navbar-right" action="./src/action_page.php">
