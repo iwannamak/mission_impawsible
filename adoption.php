@@ -5,7 +5,8 @@ define('DB_PASSWORD', '');
 define('DB_NAME', 'db_mimp');
 
 $db = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME) or die("Could not connect to database");
-$age = $place = $sex = $size="";
+$age = $sex = $size = "";
+
 
 
 ?>
@@ -290,38 +291,12 @@ $age = $place = $sex = $size="";
           <input type="radio" name="sex" <?php if (isset($sex) && $sex=="male") echo "checked";?> value="male">Αρσενικό
           <br>
 
-          <b> Περιοχή: </b>
-          <br>
-          <input type="radio" name="place" <?php if (isset($place) && $place=="Ανατολική Μακεδονία και Θράκη") echo "checked";?> value="Ανατολική Μακεδονία και Θράκη">Ανατολική Μακεδονία και Θράκη
-          <br>
-          <input type="radio" name="place" <?php if (isset($place) && $place=="Κεντρική Μακεδονία") echo "checked";?> value="Κεντρική Μακεδονία">Κεντρική Μακεδονία
-          <br>
-          <input type="radio" name="place" <?php if (isset($place) && $place=="Δυτική Μακεδονία") echo "checked";?> value="Δυτική Μακεδονία">Δυτική Μακεδονία
-          <br>
-          <input type="radio" name="place" <?php if (isset($place) && $place=="Ήπειρος") echo "checked";?> value="Ήπειρος">Ήπειρος
-          <br>
-          <input type="radio" name="place" <?php if (isset($place) && $place=="Θεσσαλία") echo "checked";?> value="Θεσσαλία">Θεσσαλία
-          <br>
-          <input type="radio" name="place" <?php if (isset($place) && $place=="Ιόνιοι Νήσοι") echo "checked";?> value="Ιόνιοι Νήσοι">Ιόνιοι Νήσοι
-          <br>
-          <input type="radio" name="place" <?php if (isset($place) && $place=="Δυτική Ελλάδα") echo "checked";?> value="Δυτική Ελλάδα">Δυτική Ελλάδα
-          <br>
-          <input type="radio" name="place" <?php if (isset($place) && $place=="Στερεά Ελλάδα") echo "checked";?> value="Στερεά Ελλάδα">Στερεά Ελλάδα
-          <br>
-          <input type="radio" name="place" <?php if (isset($place) && $place=="Αττική") echo "checked";?> value="Αττική">Αττική
-          <br>
-          <input type="radio" name="place" <?php if (isset($place) && $place=="Πελοπόννησος") echo "checked";?> value="Πελοπόννησος">Πελοπόννησος
-          <br>
-          <input type="radio" name="place" <?php if (isset($place) && $place=="Βόρειο Αιγαίο") echo "checked";?> value="Βόρειο Αιγαίο">Βόρειο Αιγαίο
-          <br>
-          <input type="radio" name="place" <?php if (isset($place) && $place=="Νότιο Αιγαίο") echo "checked";?> value="Νότιο Αιγαίο">Νότιο Αιγαίο
-          <br>
-          <input type="radio" name="place" <?php if (isset($place) && $place=="Κρήτη") echo "checked";?> value="Κρήτη">Κρήτη
-          <br>
+          
           <br>
           <input type="submit" name="submit" value="Αναζήτηση">
         </form>
           <?php
+          
           
           
           echo "Τα αποτελέσματα της αναζήτησής σας";
@@ -330,15 +305,13 @@ $age = $place = $sex = $size="";
 
           if($_SERVER["REQUEST_METHOD"] == "POST"){
     
-            if(empty($_POST["age"])&&empty($_POST["place"])&&empty($_POST["sex"])&&empty($_POST["size"])){
+            if(empty($_POST["age"])&&empty($_POST["sex"])&&empty($_POST["size"])){
               $sql = "SELECT * FROM animal"; 
+              $result = mysqli_query($db, $sql);
 
-              $result = $db->query($sql);
-
-          
-              if ($result->num_rows > 0) {
-              // output data of each row
-              while($row = $result->fetch_assoc()) {
+                  if(mysqli_num_rows($result) > 0 ){
+                  // output data of each row
+                  while($row = mysqli_fetch_assoc($result)){
                 echo "Όνομα: " . $row["name"]. "<br>" ;
                 echo "Ηλικία:  " . $row["age"]. "<br>" ;
                 echo "Μέγεθος: " . $row["size"]. "<br>";
@@ -351,252 +324,15 @@ $age = $place = $sex = $size="";
                 echo "0 results";
                }
             }
-            elseif (!empty($_POST["age"])&&!empty($_POST["place"])&&!empty($_POST["sex"])&&!empty($_POST["size"])){
-                if ($_POST["age"] =="01"){
-                  $sql = "SELECT * FROM animal WHERE age<=1 AND place=? AND sex=? AND size=?";
-                  
-                  $result = $db->query($sql);
-                  if (!$result) {
-                    trigger_error('Invalid query: ' . $db->error);
-                }
-
-                  if ($result->num_rows > 0) {
-                  // output data of each row
-                  while($row = $result->fetch_assoc()) {
-                    echo "Όνομα: " . $row["name"]. "<br>" ;
-                    echo "Ηλικία:  " . $row["age"]. "<br>" ;
-                    echo "Μέγεθος: " . $row["size"]. "<br>";
-                    echo "Φύλο: " . $row["sex"]. "<br>"; 
-                    echo "Περιοχή: " . $row["place"]."<br>";
-                    echo "<br>";
-                   }
-                  }
-                  else {
-                    echo "0 results";
-                   }
-                }
-                elseif ($_POST["age"] =="12"){
-                  $sql = "SELECT * FROM animal WHERE age<=2 AND age>1 AND place=? AND sex=? AND size=?";
-                  $result = $db->query($sql);
-
-                  if ($result->num_rows > 0) {
-                  // output data of each row
-                  while($row = $result->fetch_assoc())  {
-                    echo "Όνομα: " . $row["name"]. "<br>" ;
-                    echo "Ηλικία:  " . $row["age"]. "<br>" ;
-                    echo "Μέγεθος: " . $row["size"]. "<br>";
-                    echo "Φύλο: " . $row["sex"]. "<br>"; 
-                    echo "Περιοχή: " . $row["place"]."<br>";
-                    echo "<br>";
-                    }
-                  }
-                  else {
-                    echo "0 results";
-                   }
-                }
-                elseif ($_POST["age"] =="25"){
-                  $sql = "SELECT * FROM animal WHERE age<=5 AND age>2 AND place=? AND sex=? AND size=?";
-                  $result = $db->query($sql);
-
-                  if ($result->num_rows > 0) {
-                  // output data of each row
-                  while($row = $result->fetch_assoc())  {
-                    echo "Όνομα: " . $row["name"]. "<br>" ;
-                    echo "Ηλικία:  " . $row["age"]. "<br>" ;
-                    echo "Μέγεθος: " . $row["size"]. "<br>";
-                    echo "Φύλο: " . $row["sex"]. "<br>"; 
-                    echo "Περιοχή: " . $row["place"]."<br>";
-                    echo "<br>";
-                    }
-                  }
-                  else {
-                    echo "0 results";
-                   }
-                }
-                elseif ($_POST["age"] == "5"){
-                  $sql = "SELECT * FROM animal WHERE age>5 AND place=? AND sex=? AND size=?";
-                  $result = $db->query($sql);
-
-                  if ($result->num_rows > 0) {
-                  // output data of each row
-                  while($row = $result->fetch_assoc())  {
-                    echo "Όνομα: " . $row["name"]. "<br>" ;
-                    echo "Ηλικία:  " . $row["age"]. "<br>" ;
-                    echo "Μέγεθος: " . $row["size"]. "<br>";
-                    echo "Φύλο: " . $row["sex"]. "<br>"; 
-                    echo "Περιοχή: " . $row["place"]."<br>";
-                    echo "<br>";
-                    }
-                  }
-                  else {
-                    echo "0 results";
-                   }
-                }
-              }
-            elseif(!empty($_POST["age"])&&!empty($_POST["place"])&&!empty($_POST["sex"])){
-              if ($_POST["age"] =="01"){
-                $sql = "SELECT * FROM animal WHERE age<=1 AND place=? AND sex=?";
-                $result = $db->query($sql);
-
-                  if ($result->num_rows > 0) {
-                  // output data of each row
-                  while($row = $result->fetch_assoc()) {
-                  echo "Όνομα: " . $row["name"]. "<br>" ;
-                  echo "Ηλικία:  " . $row["age"]. "<br>" ;
-                  echo "Μέγεθος: " . $row["size"]. "<br>";
-                  echo "Φύλο: " . $row["sex"]. "<br>"; 
-                  echo "Περιοχή: " . $row["place"]."<br>";
-                  echo "<br>";
-                  }
-                }
-                else {
-                  echo "0 results";
-                 }
-              }
-              elseif ($_POST["age"] =="12"){
-                $sql = "SELECT * FROM animal WHERE age<=2 AND age>1 AND place=? AND sex=?";
-                $result = $db->query($sql);
-
-                  if ($result->num_rows > 0) {
-                  // output data of each row
-                  while($row = $result->fetch_assoc())  {
-                    echo "Όνομα: " . $row["name"]. "<br>" ;
-                    echo "Ηλικία:  " . $row["age"]. "<br>" ;
-                    echo "Μέγεθος: " . $row["size"]. "<br>";
-                    echo "Φύλο: " . $row["sex"]. "<br>"; 
-                    echo "Περιοχή: " . $row["place"]."<br>";
-                    echo "<br>";
-                    }
-                  }
-                  else {
-                    echo "0 results";
-                   }
-              }
-              elseif ($_POST["age"] =="25"){
-                $sql = "SELECT * FROM animal WHERE age<=5 AND age>2 AND place=? AND sex=?";
-                $result = $db->query($sql);
-
-                  if ($result->num_rows > 0) {
-                  // output data of each row
-                  while($row = $result->fetch_assoc()) {
-                  echo "Όνομα: " . $row["name"]. "<br>" ;
-                  echo "Ηλικία:  " . $row["age"]. "<br>" ;
-                  echo "Μέγεθος: " . $row["size"]. "<br>";
-                  echo "Φύλο: " . $row["sex"]. "<br>"; 
-                  echo "Περιοχή: " . $row["place"]."<br>";
-                  echo "<br>";
-                  }
-                }
-                else {
-                  echo "0 results";
-                 }
-              }
-              elseif ($_POST["age"] == "5"){
-                $sql = "SELECT * FROM animal WHERE age>5 AND place=? AND sex=?";
-                $result = $db->query($sql);
-
-                if ($result->num_rows > 0) {
-                // output data of each row
-                while($row = $result->fetch_assoc()) {
-                    echo "Όνομα: " . $row["name"]. "<br>" ;
-                    echo "Ηλικία:  " . $row["age"]. "<br>" ;
-                    echo "Μέγεθος: " . $row["size"]. "<br>";
-                    echo "Φύλο: " . $row["sex"]. "<br>"; 
-                    echo "Περιοχή: " . $row["place"]."<br>";
-                    echo "<br>";
-                    }
-                  }
-                  else {
-                    echo "0 results";
-                   }
-              }
-            }
-            elseif(!empty($_POST["age"])&&!empty($_POST["place"])){
-              if ($_POST["age"] =="01"){
-                $sql = "SELECT * FROM animal WHERE age<=1 AND place=?";
-                $result = $db->query($sql);
-
-                  if ($result->num_rows > 0) {
-                  // output data of each row
-                  while($row = $result->fetch_assoc()) {
-                    echo "Όνομα: " . $row["name"]. "<br>" ;
-                    echo "Ηλικία:  " . $row["age"]. "<br>" ;
-                    echo "Μέγεθος: " . $row["size"]. "<br>";
-                    echo "Φύλο: " . $row["sex"]. "<br>"; 
-                    echo "Περιοχή: " . $row["place"]."<br>";
-                    echo "<br>";
-                    }
-                  }
-                  else {
-                    echo "0 results";
-                   }
-              }
-              elseif ($_POST["age"] =="12"){
-                $sql = "SELECT * FROM animal WHERE age<=2 AND age>1 AND place=?";
-                $result = $db->query($sql);
-
-                if ($result->num_rows > 0) {
-                // output data of each row
-                while($row = $result->fetch_assoc()) {
-                    echo "Όνομα: " . $row["name"]. "<br>" ;
-                    echo "Ηλικία:  " . $row["age"]. "<br>" ;
-                    echo "Μέγεθος: " . $row["size"]. "<br>";
-                    echo "Φύλο: " . $row["sex"]. "<br>"; 
-                    echo "Περιοχή: " . $row["place"]."<br>";
-                    echo "<br>";
-                     }
-                  }
-                  else {
-                    echo "0 results";
-                   }
-              }
-              elseif ($_POST["age"] =="25"){
-                $sql = "SELECT * FROM animal WHERE age<=5 AND age>2 AND place=?";
-                $result = $db->query($sql);
-
-                  if ($result->num_rows > 0) {
-                  // output data of each row
-                  while($row = $result->fetch_assoc())  {
-                    echo "Όνομα: " . $row["name"]. "<br>" ;
-                    echo "Ηλικία:  " . $row["age"]. "<br>" ;
-                    echo "Μέγεθος: " . $row["size"]. "<br>";
-                    echo "Φύλο: " . $row["sex"]. "<br>"; 
-                    echo "Περιοχή: " . $row["place"]."<br>";
-                    echo "<br>";
-                       }
-                  }
-                  else {
-                    echo "0 results";
-                   }
-              }
-              elseif ($_POST["age"] == "5"){
-                $sql = "SELECT * FROM animal WHERE age>5 AND place=?";
-                $result = $db->query($sql);
-
-                  if ($result->num_rows > 0) {
-                  // output data of each row
-                  while($row = $result->fetch_assoc()) {
-                  echo "Όνομα: " . $row["name"]. "<br>" ;
-                  echo "Ηλικία:  " . $row["age"]. "<br>" ;
-                  echo "Μέγεθος: " . $row["size"]. "<br>";
-                  echo "Φύλο: " . $row["sex"]. "<br>"; 
-                  echo "Περιοχή: " . $row["place"]."<br>";
-                  echo "<br>";
-                  }
-                }
-                else {
-                  echo "0 results";
-                 }
-              }
-            }
+            
             elseif(!empty($_POST["age"])){
               if ($_POST["age"] =="01"){
                 $sql = "SELECT * FROM animal WHERE age<=1";
-                $result = $db->query($sql);
+                $result = mysqli_query($db, $sql);
 
-                  if ($result->num_rows > 0) {
-                  // output data of each row
-                  while($row = $result->fetch_assoc()) {
+                if(mysqli_num_rows($result) > 0 ){
+                // output data of each row
+                while($row = mysqli_fetch_assoc($result)){
                     echo "Όνομα: " . $row["name"]. "<br>" ;
                     echo "Ηλικία:  " . $row["age"]. "<br>" ;
                     echo "Μέγεθος: " . $row["size"]. "<br>";
@@ -611,11 +347,11 @@ $age = $place = $sex = $size="";
               }
               elseif ($_POST["age"] =="12"){
                 $sql = "SELECT * FROM animal WHERE age<=2 AND age>1";
-                $result = $db->query($sql);
+                $result = mysqli_query($db, $sql);
 
-                  if ($result->num_rows > 0) {
-                  // output data of each row
-                  while($row = $result->fetch_assoc())  {
+                if(mysqli_num_rows($result) > 0 ){
+                // output data of each row
+                while($row = mysqli_fetch_assoc($result)) {
                     echo "Όνομα: " . $row["name"]. "<br>" ;
                     echo "Ηλικία:  " . $row["age"]. "<br>" ;
                     echo "Μέγεθος: " . $row["size"]. "<br>";
@@ -630,11 +366,11 @@ $age = $place = $sex = $size="";
               }
               elseif ($_POST["age"] =="25"){
                 $sql = "SELECT * FROM animal WHERE age<=5 AND age>2";
-                $result = $db->query($sql);
+                $result = mysqli_query($db, $sql);
 
-                  if ($result->num_rows > 0) {
-                  // output data of each row
-                  while($row = $result->fetch_assoc()) {
+                if(mysqli_num_rows($result) > 0 ){
+                // output data of each row
+                while($row = mysqli_fetch_assoc($result)) {
                     echo "Όνομα: " . $row["name"]. "<br>" ;
                     echo "Ηλικία:  " . $row["age"]. "<br>" ;
                     echo "Μέγεθος: " . $row["size"]. "<br>";
@@ -649,11 +385,11 @@ $age = $place = $sex = $size="";
               }
               elseif ($_POST["age"] == "5"){
                 $sql = "SELECT * FROM animal WHERE age>5";
-                $result = $db->query($sql);
+                $result = mysqli_query($db, $sql);
 
-                  if ($result->num_rows > 0) {
-                  // output data of each row
-                  while($row = $result->fetch_assoc()) {
+                if(mysqli_num_rows($result) > 0 ){
+                // output data of each row
+                while($row = mysqli_fetch_assoc($result)){
                     echo "Όνομα: " . $row["name"]. "<br>" ;
                     echo "Ηλικία:  " . $row["age"]. "<br>" ;
                     echo "Μέγεθος: " . $row["size"]. "<br>";
@@ -667,32 +403,19 @@ $age = $place = $sex = $size="";
                    }
               }
             }
-            elseif(!empty($_POST["place"])){
-              $sql = " SELECT * FROM animal WHERE place = ? ";
-              mysqli_num_rows ( $result );
-              
-              if(mysqli_num_rows ( $result ) > 0 ){
-                  // output data of each row
-                  while($row = $result->fetch_assoc()) {
-                    echo "Όνομα: " . $row["name"]. "<br>" ;
-                    echo "Ηλικία:  " . $row["age"]. "<br>" ;
-                    echo "Μέγεθος: " . $row["size"]. "<br>";
-                    echo "Φύλο: " . $row["sex"]. "<br>"; 
-                    echo "Περιοχή: " . $row["place"]."<br>";
-                    echo "<br>";
-                    }
-                  }
-                  else {
-                    echo "0 results";
-                   }
-            }
+            
             elseif(!empty($_POST["sex"])){
-              $sql = "SELECT * FROM animal WHERE sex=? ";
-              $result = $db->query($sql);
+              if ($_POST["sex"] == "male"){
+              $sql = "SELECT * FROM animal WHERE sex = 'male' ";
+              }
+              elseif($_POST["sex"] == "female"){
+                $sql = "SELECT * FROM animal WHERE sex = 'female' ";
+              }
+              $result = mysqli_query($db, $sql);
 
-                  if ($result->num_rows > 0) {
-                  // output data of each row
-                  while($row = $result->fetch_assoc())  {
+                if(mysqli_num_rows($result) > 0 ){
+                // output data of each row
+                 while($row = mysqli_fetch_assoc($result)){
                     echo "Όνομα: " . $row["name"]. "<br>" ;
                     echo "Ηλικία:  " . $row["age"]. "<br>" ;
                     echo "Μέγεθος: " . $row["size"]. "<br>";
@@ -706,12 +429,22 @@ $age = $place = $sex = $size="";
                    }
             }
             elseif(!empty($_POST["size"])){
-              $sql = "SELECT * FROM animal WHERE size=? ";
-              $result = $db->query($sql);
+              if ($_POST["size"] == "small"){
+                $sql = "SELECT * FROM animal WHERE  size='small'";
+                }
+                elseif($_POST["size"] == "medium"){
+                  $sql = "SELECT * FROM animal WHERE  size='medium'";
+              }
+              elseif($_POST["size"] == "large"){
+                $sql = "SELECT * FROM animal WHERE  size='large'";
+                }
+            }
+              
+              $result = mysqli_query($db, $sql);
 
-                  if ($result->num_rows > 0) {
-                  // output data of each row
-                  while($row = $result->fetch_assoc())  {
+                if(mysqli_num_rows($result) > 0 ){
+                // output data of each row
+                while($row = mysqli_fetch_assoc($result)) {
                     echo "Όνομα: " . $row["name"]. "<br>" ;
                     echo "Ηλικία:  " . $row["age"]. "<br>" ;
                     echo "Μέγεθος: " . $row["size"]. "<br>";
@@ -719,37 +452,39 @@ $age = $place = $sex = $size="";
                     echo "Περιοχή: " . $row["place"]."<br>";
                     echo "<br>";
                      }
-                  }
-                  else {
-                    echo "0 results";
-                   }
-            }
-            elseif (!empty($_POST["place"])&&!empty($_POST["sex"])&&!empty($_POST["size"])){
-              $sql = "SELECT * FROM animal WHERE place=? AND sex=? AND size=?";  
-              $result = $db->query($sql);
-
-              if ($result->num_rows > 0) {
-              // output data of each row
-              while($row = $result->fetch_assoc()) {
-                    echo "Όνομα: " . $row["name"]. "<br>" ;
-                    echo "Ηλικία:  " . $row["age"]. "<br>" ;
-                    echo "Μέγεθος: " . $row["size"]. "<br>";
-                    echo "Φύλο: " . $row["sex"]. "<br>"; 
-                    echo "Περιοχή: " . $row["place"]."<br>";
-                    echo "<br>";
-                      }
                   }
                   else {
                     echo "0 results";
                    }
             }
             elseif (!empty($_POST["sex"])&&!empty($_POST["size"])){
-              $sql = "SELECT * FROM animal WHERE sex=? AND size=?";  
-              $result = $db->query($sql);
+              if ($_POST["sex"] == "male"){
+                if ($_POST["size"] == "small"){
+                  $sql = "SELECT * FROM animal WHERE sex = 'male' AND size='small'";
+                  }
+                  elseif($_POST["size"] == "medium"){
+                    $sql = "SELECT * FROM animal WHERE sex = 'male' AND size='medium'";
+                }
+                elseif($_POST["size"] == "large"){
+                  $sql = "SELECT * FROM animal WHERE sex = 'male' AND size='large'";
+                }
+              }
+              elseif($_POST["sex"] == "female"){
+                if ($_POST["size"] == "small"){
+                  $sql = "SELECT * FROM animal WHERE sex = 'female' AND size='small'";
+                  }
+                  elseif($_POST["size"] == "medium"){
+                    $sql = "SELECT * FROM animal WHERE sex = 'female' AND size='medium'";
+                }
+                elseif($_POST["size"] == "large"){
+                  $sql = "SELECT * FROM animal WHERE sex = 'female' AND size='large'";
+                  }
+              }
+              $result = mysqli_query($db, $sql);
 
-                  if ($result->num_rows > 0) {
-                  // output data of each row
-                  while($row = $result->fetch_assoc()) {
+                if(mysqli_num_rows($result) > 0 ){
+                // output data of each row
+                while($row = mysqli_fetch_assoc($result)){
                     echo "Όνομα: " . $row["name"]. "<br>" ;
                     echo "Ηλικία:  " . $row["age"]. "<br>" ;
                     echo "Μέγεθος: " . $row["size"]. "<br>";
@@ -762,52 +497,23 @@ $age = $place = $sex = $size="";
                     echo "0 results";
                    }
             }
-            elseif (!empty($_POST["place"])&&!empty($_POST["sex"])){
-              $sql = "SELECT * FROM animal WHERE place=? AND sex=?"; 
-              $result = $db->query($sql);
-
-                  if ($result->num_rows > 0) {
-                  // output data of each row
-                  while($row = $result->fetch_assoc())  {
-                    echo "Όνομα: " . $row["name"]. "<br>" ;
-                    echo "Ηλικία:  " . $row["age"]. "<br>" ;
-                    echo "Μέγεθος: " . $row["size"]. "<br>";
-                    echo "Φύλο: " . $row["sex"]. "<br>"; 
-                    echo "Περιοχή: " . $row["place"]."<br>";
-                    echo "<br>";
-                     }
-                  } 
-                  else {
-                    echo "0 results";
-                   }
-            }
-            elseif (!empty($_POST["place"])&&!empty($_POST["size"])){
-              $sql = "SELECT * FROM animal WHERE place=? AND size=?"; 
-              $result = $db->query($sql);
-
-                  if ($result->num_rows > 0) {
-                  // output data of each row
-                  while($row = $result->fetch_assoc())  {
-                    echo "Όνομα: " . $row["name"]. "<br>" ;
-                    echo "Ηλικία:  " . $row["age"]. "<br>" ;
-                    echo "Μέγεθος: " . $row["size"]. "<br>";
-                    echo "Φύλο: " . $row["sex"]. "<br>"; 
-                    echo "Περιοχή: " . $row["place"]."<br>";
-                    echo "<br>";
-                       }
-                  } 
-                  else {
-                    echo "0 results";
-                   }
-            }
             elseif (!empty($_POST["age"])&&!empty($_POST["size"])){
               if ($_POST["age"] =="01"){
-                $sql = "SELECT * FROM animal WHERE age<=1 AND size=?";
-                $result = $db->query($sql);
-
-                  if ($result->num_rows > 0) {
+                if ($_POST["size"] == "small"){
+                  $sql = "SELECT * FROM animal WHERE age<=1 AND size='small'";
+                  }
+                  elseif($_POST["size"] == "medium"){
+                    $sql = "SELECT * FROM animal WHERE age<=1 AND size='medium'";
+                }
+                elseif($_POST["size"] == "large"){
+                  $sql = "SELECT * FROM animal WHERE age<=1 AND size='large'";
+                  }
+              
+                $result = mysqli_query($db, $sql);
+  
+                  if(mysqli_num_rows($result) > 0 ){
                   // output data of each row
-                  while($row = $result->fetch_assoc())  {
+                  while($row = mysqli_fetch_assoc($result)) {
                     echo "Όνομα: " . $row["name"]. "<br>" ;
                     echo "Ηλικία:  " . $row["age"]. "<br>" ;
                     echo "Μέγεθος: " . $row["size"]. "<br>";
@@ -821,12 +527,21 @@ $age = $place = $sex = $size="";
                    }
               }
               elseif ($_POST["age"] =="12"){
-                $sql = "SELECT * FROM animal WHERE age<=2 AND age>1 AND size=?";
-                $result = $db->query($sql);
+                if ($_POST["size"] == "small"){
+                  $sql = "SELECT * FROM animal WHERE age<=2 AND age>1 AND size='small'";
+                  }
+                  elseif($_POST["size"] == "medium"){
+                    $sql = "SELECT * FROM animal WHERE age<=2 AND age>1 AND size='medium'";
+                }
+                elseif($_POST["size"] == "large"){
+                  $sql = "SELECT * FROM animal WHERE age<=2 AND age>1 AND size='large'";
+                  }
 
-                  if ($result->num_rows > 0) {
+                $result = mysqli_query($db, $sql);
+  
+                  if(mysqli_num_rows($result) > 0 ){
                   // output data of each row
-                  while($row = $result->fetch_assoc())  {
+                  while($row = mysqli_fetch_assoc($result)){
                     echo "Όνομα: " . $row["name"]. "<br>" ;
                     echo "Ηλικία:  " . $row["age"]. "<br>" ;
                     echo "Μέγεθος: " . $row["size"]. "<br>";
@@ -840,12 +555,20 @@ $age = $place = $sex = $size="";
                    }
               }
               elseif ($_POST["age"] =="25"){
-                $sql = "SELECT * FROM animal WHERE age<=5 AND age>2 AND size=?";
-                $result = $db->query($sql);
-
-                  if ($result->num_rows > 0) {
+                if ($_POST["size"] == "small"){
+                  $sql = "SELECT * FROM animal WHERE age<=5 AND age>2 AND size='small'";
+                  }
+                  elseif($_POST["size"] == "medium"){
+                    $sql = "SELECT * FROM animal WHERE age<=5 AND age>2 AND size='medium'";
+                }
+                elseif($_POST["size"] == "large"){
+                  $sql = "SELECT * FROM animal WHERE age<=5 AND age>2 AND size='large'";
+                  }
+                $result = mysqli_query($db, $sql);
+  
+                  if(mysqli_num_rows($result) > 0 ){
                   // output data of each row
-                  while($row = $result->fetch_assoc())  {
+                  while($row = mysqli_fetch_assoc($result)) {
                     echo "Όνομα: " . $row["name"]. "<br>" ;
                     echo "Ηλικία:  " . $row["age"]. "<br>" ;
                     echo "Μέγεθος: " . $row["size"]. "<br>";
@@ -859,12 +582,20 @@ $age = $place = $sex = $size="";
                    }
               }
               elseif ($_POST["age"] == "5"){
-                $sql = "SELECT * FROM animal WHERE age>5 AND size=?";
-                $result = $db->query($sql);
-
-                  if ($result->num_rows > 0) {
+                if ($_POST["size"] == "small"){
+                  $sql = "SELECT * FROM animal WHERE age>5 AND size='small'";
+                  }
+                  elseif($_POST["size"] == "medium"){
+                    $sql = "SELECT * FROM animal WHERE age>5 AND size='medium'";
+                }
+                elseif($_POST["size"] == "large"){
+                  $sql = "SELECT * FROM animal WHERE age>5 AND size='large'";
+                  } 
+                $result = mysqli_query($db, $sql);
+  
+                  if(mysqli_num_rows($result) > 0 ){
                   // output data of each row
-                  while($row = $result->fetch_assoc()) {
+                  while($row = mysqli_fetch_assoc($result)) {
                     echo "Όνομα: " . $row["name"]. "<br>" ;
                     echo "Ηλικία:  " . $row["age"]. "<br>" ;
                     echo "Μέγεθος: " . $row["size"]. "<br>";
@@ -880,12 +611,18 @@ $age = $place = $sex = $size="";
             }
             elseif (!empty($_POST["age"])&&!empty($_POST["sex"])){
               if ($_POST["age"] =="01"){
-                $sql = "SELECT * FROM animal WHERE age<=1 AND sex=?";
-                $result = $db->query($sql);
-
-                  if ($result->num_rows > 0) {
+                if ($_POST["sex"] == "male"){
+                  $sql = "SELECT * FROM animal WHERE age<=1 AND sex = 'male' ";
+                  }
+                  elseif($_POST["sex"] == "female"){
+                    $sql = "SELECT * FROM animal WHERE age<=1 AND sex = 'female' ";
+                  }
+                 
+                $result = mysqli_query($db, $sql);
+  
+                  if(mysqli_num_rows($result) > 0 ){
                   // output data of each row
-                  while($row = $result->fetch_assoc()) {
+                  while($row = mysqli_fetch_assoc($result)) {
                     echo "Όνομα: " . $row["name"]. "<br>" ;
                     echo "Ηλικία:  " . $row["age"]. "<br>" ;
                     echo "Μέγεθος: " . $row["size"]. "<br>";
@@ -899,12 +636,18 @@ $age = $place = $sex = $size="";
                    }
               }
               elseif ($_POST["age"] =="12"){
-                $sql = "SELECT * FROM animal WHERE age<=2 AND age>1 AND sex=?";
-                $result = $db->query($sql);
-
-                  if ($result->num_rows > 0) {
+                if ($_POST["sex"] == "male"){
+                  $sql = "SELECT * FROM animal WHERE age<=2 AND age>1 AND sex = 'male' ";
+                  }
+                  elseif($_POST["sex"] == "female"){
+                    $sql = "SELECT * FROM animal WHERE age<=2 AND age>1 AND sex = 'female' ";
+                  }
+                 
+                $result = mysqli_query($db, $sql);
+  
+                  if(mysqli_num_rows($result) > 0 ){
                   // output data of each row
-                  while($row = $result->fetch_assoc()) {
+                  while($row = mysqli_fetch_assoc($result)) {
                     echo "Όνομα: " . $row["name"]. "<br>" ;
                     echo "Ηλικία:  " . $row["age"]. "<br>" ;
                     echo "Μέγεθος: " . $row["size"]. "<br>";
@@ -918,12 +661,18 @@ $age = $place = $sex = $size="";
                    }
               }
               elseif ($_POST["age"] =="25"){
-                $sql = "SELECT * FROM animal WHERE age<=5 AND age>2 AND sex=?";
-                $result = $db->query($sql);
-
-                  if ($result->num_rows > 0) {
+                if ($_POST["sex"] == "male"){
+                  $sql = "SELECT * FROM animal WHERE age<=5 AND age>2 AND sex = 'male' ";
+                  }
+                  elseif($_POST["sex"] == "female"){
+                    $sql = "SELECT * FROM animal WHERE age<=5 AND age>2 AND sex = 'female' ";
+                  }
+                  
+                $result = mysqli_query($db, $sql);
+  
+                  if(mysqli_num_rows($result) > 0 ){
                   // output data of each row
-                  while($row = $result->fetch_assoc()) {
+                  while($row = mysqli_fetch_assoc($result))  {
                     echo "Όνομα: " . $row["name"]. "<br>" ;
                     echo "Ηλικία:  " . $row["age"]. "<br>" ;
                     echo "Μέγεθος: " . $row["size"]. "<br>";
@@ -937,12 +686,18 @@ $age = $place = $sex = $size="";
                    }
               }
               elseif ($_POST["age"] == "5"){
-                $sql = "SELECT * FROM animal WHERE age>5 AND sex=?";
-                $result = $db->query($sql);
+                if ($_POST["sex"] == "male"){
+                  $sql = "SELECT * FROM animal WHERE age>5 AND sex = 'male' ";
+                  }
+                  elseif($_POST["sex"] == "female"){
+                    $sql = "SELECT * FROM animal WHERE age>5 AND sex = 'female' ";
+                  }
 
-                  if ($result->num_rows > 0) {
+                $result = mysqli_query($db, $sql);
+  
+                  if(mysqli_num_rows($result) > 0 ){
                   // output data of each row
-                  while($row = $result->fetch_assoc()) {
+                  while($row = mysqli_fetch_assoc($result))  {
                   echo "Όνομα: " . $row["name"]. "<br>" ;
                   echo "Ηλικία:  " . $row["age"]. "<br>" ;
                   echo "Μέγεθος: " . $row["size"]. "<br>";
@@ -958,12 +713,34 @@ $age = $place = $sex = $size="";
             }
             elseif (!empty($_POST["age"])&&!empty($_POST["sex"])&&!empty($_POST["size"])){
               if ($_POST["age"] =="01"){
-                $sql = "SELECT * FROM animal WHERE age<=1  AND sex=? AND size=?";
-                $result = $db->query($sql);
-
-                  if ($result->num_rows > 0) {
+                if ($_POST["sex"] == "male"){
+                  if ($_POST["size"] == "small"){
+                    $sql = "SELECT * FROM animal WHERE age<=1  AND sex = 'male' AND size='small'";
+                    }
+                    elseif($_POST["size"] == "medium"){
+                      $sql = "SELECT * FROM animal WHERE  age<=1  ANDsex = 'male' AND size='medium'";
+                  }
+                  elseif($_POST["size"] == "large"){
+                    $sql = "SELECT * FROM animal WHERE age<=1  AND sex = 'male' AND size='large'";
+                  }
+                }
+                elseif($_POST["sex"] == "female"){
+                  if ($_POST["size"] == "small"){
+                    $sql = "SELECT * FROM animal WHERE age<=1  AND sex = 'female' AND size='small'";
+                    }
+                    elseif($_POST["size"] == "medium"){
+                      $sql = "SELECT * FROM animal WHERE age<=1  AND sex = 'female' AND size='medium'";
+                  }
+                  elseif($_POST["size"] == "large"){
+                    $sql = "SELECT * FROM animal WHERE age<=1  AND sex = 'female' AND size='large'";
+                    }
+                }
+                
+                $result = mysqli_query($db, $sql);
+  
+                  if(mysqli_num_rows($result) > 0 ){
                   // output data of each row
-                  while($row = $result->fetch_assoc()) {
+                  while($row = mysqli_fetch_assoc($result))  {
                     echo "Όνομα: " . $row["name"]. "<br>" ;
                     echo "Ηλικία:  " . $row["age"]. "<br>" ;
                     echo "Μέγεθος: " . $row["size"]. "<br>";
@@ -977,12 +754,33 @@ $age = $place = $sex = $size="";
                    }
               }
               elseif ($_POST["age"] =="12"){
-                $sql = "SELECT * FROM animal WHERE age<=2 AND age>1 AND sex=? AND size=?";
-                $result = $db->query($sql);
-
-                  if ($result->num_rows > 0) {
+                if ($_POST["sex"] == "male"){
+                  if ($_POST["size"] == "small"){
+                    $sql = "SELECT * FROM animal WHERE age<=2 AND age>1  AND sex = 'male' AND size='small'";
+                    }
+                    elseif($_POST["size"] == "medium"){
+                      $sql = "SELECT * FROM animal WHERE age<=2 AND age>1  ANDsex = 'male' AND size='medium'";
+                  }
+                  elseif($_POST["size"] == "large"){
+                    $sql = "SELECT * FROM animal WHERE age<=2 AND age>1  AND sex = 'male' AND size='large'";
+                  }
+                }
+                elseif($_POST["sex"] == "female"){
+                  if ($_POST["size"] == "small"){
+                    $sql = "SELECT * FROM animal WHERE age<=2 AND age>1 AND sex = 'female' AND size='small'";
+                    }
+                    elseif($_POST["size"] == "medium"){
+                      $sql = "SELECT * FROM animal WHERE age<=2 AND age>1 AND sex = 'female' AND size='medium'";
+                  }
+                  elseif($_POST["size"] == "large"){
+                    $sql = "SELECT * FROM animal WHERE age<=2 AND age>1 AND sex = 'female' AND size='large'";
+                    }
+                }
+                 $result = mysqli_query($db, $sql);
+  
+                  if(mysqli_num_rows($result) > 0 ){
                   // output data of each row
-                  while($row = $result->fetch_assoc())  {
+                  while($row = mysqli_fetch_assoc($result)) {
                     echo "Όνομα: " . $row["name"]. "<br>" ;
                     echo "Ηλικία:  " . $row["age"]. "<br>" ;
                     echo "Μέγεθος: " . $row["size"]. "<br>";
@@ -996,12 +794,33 @@ $age = $place = $sex = $size="";
                    }
               }
               elseif ($_POST["age"] =="25"){
-                $sql = "SELECT * FROM animal WHERE age<=5 AND age>2 AND sex=? AND size=?";
-                $result = $db->query($sql);
-
-                  if ($result->num_rows > 0) {
+                if ($_POST["sex"] == "male"){
+                  if ($_POST["size"] == "small"){
+                    $sql = "SELECT * FROM animal WHERE age<=5 AND age>2  AND sex = 'male' AND size='small'";
+                    }
+                    elseif($_POST["size"] == "medium"){
+                      $sql = "SELECT * FROM animal WHERE age<=5 AND age>2  ANDsex = 'male' AND size='medium'";
+                  }
+                  elseif($_POST["size"] == "large"){
+                    $sql = "SELECT * FROM animal WHERE age<=5 AND age>2  AND sex = 'male' AND size='large'";
+                  }
+                }
+                elseif($_POST["sex"] == "female"){
+                  if ($_POST["size"] == "small"){
+                    $sql = "SELECT * FROM animal WHERE age<=5 AND age>2 AND sex = 'female' AND size='small'";
+                    }
+                    elseif($_POST["size"] == "medium"){
+                      $sql = "SELECT * FROM animal WHERE age<=5 AND age>2 AND sex = 'female' AND size='medium'";
+                  }
+                  elseif($_POST["size"] == "large"){
+                    $sql = "SELECT * FROM animal WHERE age<=5 AND age>2 AND sex = 'female' AND size='large'";
+                    }
+                }
+                  $result = mysqli_query($db, $sql);
+  
+                  if(mysqli_num_rows($result) > 0 ){
                   // output data of each row
-                  while($row = $result->fetch_assoc()) {
+                  while($row = mysqli_fetch_assoc($result)) {
                     echo "Όνομα: " . $row["name"]. "<br>" ;
                     echo "Ηλικία:  " . $row["age"]. "<br>" ;
                     echo "Μέγεθος: " . $row["size"]. "<br>";
@@ -1015,12 +834,33 @@ $age = $place = $sex = $size="";
                    }
               }
               elseif ($_POST["age"] == "5"){
-                $sql = "SELECT * FROM animal WHERE age>5 AND sex=? AND size=?";
-                $result = $db->query($sql);
-
-                  if ($result->num_rows > 0) {
+                if ($_POST["sex"] == "male"){
+                  if ($_POST["size"] == "small"){
+                    $sql = "SELECT * FROM animal WHERE age>5  AND sex = 'male' AND size='small'";
+                    }
+                    elseif($_POST["size"] == "medium"){
+                      $sql = "SELECT * FROM animal WHERE age>5 AND sex = 'male' AND size='medium'";
+                  }
+                  elseif($_POST["size"] == "large"){
+                    $sql = "SELECT * FROM animal WHERE age>5 AND sex = 'male' AND size='large'";
+                  }
+                }
+                elseif($_POST["sex"] == "female"){
+                  if ($_POST["size"] == "small"){
+                    $sql = "SELECT * FROM animal WHERE age>5 AND sex = 'female' AND size='small'";
+                    }
+                    elseif($_POST["size"] == "medium"){
+                      $sql = "SELECT * FROM animal WHERE age>5 AND sex = 'female' AND size='medium'";
+                  }
+                  elseif($_POST["size"] == "large"){
+                    $sql = "SELECT * FROM animal WHERE age>5 AND sex = 'female' AND size='large'";
+                    }
+                }
+                 $result = mysqli_query($db, $sql);
+  
+                  if(mysqli_num_rows($result) > 0 ){
                   // output data of each row
-                  while($row = $result->fetch_assoc())  {
+                  while($row = mysqli_fetch_assoc($result))  {
                     echo "Όνομα: " . $row["name"]. "<br>" ;
                     echo "Ηλικία:  " . $row["age"]. "<br>" ;
                     echo "Μέγεθος: " . $row["size"]. "<br>";
@@ -1034,86 +874,9 @@ $age = $place = $sex = $size="";
                    }
               }
             }
-            elseif (!empty($_POST["age"])&&!empty($_POST["place"])&&!empty($_POST["size"])){
-              if ($_POST["age"] =="01"){
-                $sql = "SELECT * FROM animal WHERE age<=1 AND place=? AND size=?";
-                $result = $db->query($sql);
-
-                  if ($result->num_rows > 0) {
-                  // output data of each row
-                  while($row = $result->fetch_assoc())  {
-                    echo "Όνομα: " . $row["name"]. "<br>" ;
-                    echo "Ηλικία:  " . $row["age"]. "<br>" ;
-                    echo "Μέγεθος: " . $row["size"]. "<br>";
-                    echo "Φύλο: " . $row["sex"]. "<br>"; 
-                    echo "Περιοχή: " . $row["place"]."<br>";
-                    echo "<br>";
-                   }
-                  }
-                  else {
-                    echo "0 results";
-                   }
-              }
-              elseif ($_POST["age"] =="12"){
-                $sql = "SELECT * FROM animal WHERE age<=2 AND age>1 AND place=? AND size=?";
-                $result = $db->query($sql);
-
-                  if ($result->num_rows > 0) {
-                  // output data of each row
-                  while($row = $result->fetch_assoc())  {
-                    echo "Όνομα: " . $row["name"]. "<br>" ;
-                    echo "Ηλικία:  " . $row["age"]. "<br>" ;
-                    echo "Μέγεθος: " . $row["size"]. "<br>";
-                    echo "Φύλο: " . $row["sex"]. "<br>"; 
-                    echo "Περιοχή: " . $row["place"]."<br>";
-                    echo "<br>";
-                   }
-                  }
-                  else {
-                    echo "0 results";
-                   }
-              }
-              elseif ($_POST["age"] =="25"){
-                $sql = "SELECT * FROM animal WHERE age<=5 AND age>2 AND place=? AND size=?";
-                $result = $db->query($sql);
-
-                  if ($result->num_rows > 0) {
-                  // output data of each row
-                  while($row = $result->fetch_assoc()) {
-                    echo "Όνομα: " . $row["name"]. "<br>" ;
-                    echo "Ηλικία:  " . $row["age"]. "<br>" ;
-                    echo "Μέγεθος: " . $row["size"]. "<br>";
-                    echo "Φύλο: " . $row["sex"]. "<br>"; 
-                    echo "Περιοχή: " . $row["place"]."<br>";
-                    echo "<br>";
-                  }
-                  }
-                  else {
-                    echo "0 results";
-                   }
-              }
-              elseif ($_POST["age"] == "5"){
-                $sql = "SELECT * FROM animal WHERE age>5 AND place=? AND size=?";
-                $result = $db->query($sql);
-
-                if ($result->num_rows > 0) {
-                // output data of each row
-                while($row = $result->fetch_assoc())  {
-                    echo "Όνομα: " . $row["name"]. "<br>" ;
-                    echo "Ηλικία:  " . $row["age"]. "<br>" ;
-                    echo "Μέγεθος: " . $row["size"]. "<br>";
-                    echo "Φύλο: " . $row["sex"]. "<br>"; 
-                    echo "Περιοχή: " . $row["place"]."<br>";
-                    echo "<br>";
-                    }
-                  }
-                  else {
-                    echo "0 results";
-                   }
-                }
             
-          }
-        }
+        
+        
           ?>
     </div>
   </body>
