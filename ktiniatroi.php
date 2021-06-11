@@ -1,3 +1,13 @@
+<?php
+
+define('DB_SERVER', 'localhost');
+define('DB_USERNAME', 'root');
+define('DB_PASSWORD', '');
+define('DB_NAME', 'db_mimp');
+
+$db = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME) or die("Could not connect to database");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,7 +45,6 @@
     padding: 100px 25px;
     font-family: Montserrat, sans-serif;
   }
-
   .container-fluid {
     padding: 60px 50px;
   }
@@ -198,7 +207,6 @@
   </style>
 </head>
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
-
   <nav class="navbar navbar-default">
     <div class="container">
       <div class="navbar-header">
@@ -220,8 +228,8 @@
             <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="advice.html">Χρήσιμες συμβουλές</a></li>
-              <li><a href="ktiniatroi.html">Κτηνίατροι</a></li>
-              <li><a href="ekpaideutes.html">Εκπαιδευτές</a></li>
+              <li><a href="ktiniatroi.php">Κτηνίατροι</a></li>
+              <li><a href="ekpaideutes.php">Εκπαιδευτές</a></li>
               <li><a href="donation.html">Δωρεές</a></li>
               <li><a href="forum.html">Forum</a></li>
               <li><a href="draseis.html">Δράσεις</a></li>
@@ -236,7 +244,6 @@
       </div>
     </div>
   </nav>
-
 <!-- <nav class="navbar navbar-expand-lg">
       <div class="navbar-header">
         <a class="navbar-brand" href="#myPage">
@@ -270,7 +277,6 @@
       </div>
 </nav>
 -->
-
 <div class="container-fluid">
   <form>
   </div>
@@ -334,7 +340,6 @@
     </div>
   </form>
 </div>
-
 <!-- Container (About Section) -->
 <div id="about" class="container-fluid">
   <div class="row">
@@ -350,8 +355,6 @@
     </div>
   </div>
 </div>
-
-
 <!-- Container (Services Section) -->
 <!--<div id="services" class="container-fluid text-center">
   <h2>Οι εκπαιδευτες μας</h2>
@@ -374,7 +377,6 @@
     </div>
   </div>
 </div> -->
-
 <!-- Container (Portfolio Section) -->
 <div id="portfolio" class="container-fluid text-center bg-grey">
   <h2>οι κτηνιατροι μας</h2><br>
@@ -414,7 +416,6 @@
       <li data-target="#myCarousel" data-slide-to="1"></li>
       <li data-target="#myCarousel" data-slide-to="2"></li>
     </ol> -->
-
     <!-- Wrapper for slides -->
   <!--  <div class="carousel-inner" role="listbox">
       <div class="item active">
@@ -427,7 +428,6 @@
         <h4>"Could I... BE any more happy with this site?"<br><span>Chandler Bing, Κάτω Πατήσια</span></h4>
       </div>
     </div> -->
-
     <!-- Left and right controls -->
     <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
       <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -440,7 +440,75 @@
   </div>
 </div>
 
+<div class="container">
+    <h2>ΚΤΗΝΙΑΤΡΟΙ ΚΟΝΤΑ ΣΑΣ</h2>
+    <br>
+    <h4>Βρείτε κτηνίατρους κοντά σας</h4>
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+      <div class="form-group">
+        <label>Διαλέξτε Περιοχή</label>
+        <select  name="place" class="form-control<?php echo (!empty($place_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $place; ?>">
+        <span class="invalid-feedback"><?php echo $place_err; ?></span>
+            <option value="Ανατολική Μακεδονία και Θράκη">Ανατολική Μακεδονία και Θράκη</option>
+            <option value="Κεντρική Μακεδονία">Κεντρική Μακεδονία</option>
+            <option value="Δυτική Μακεδονία">Δυτική Μακεδονία</option>
+            <option value="Ήπειρος">Ήπειρος</option>
+            <option value="Θεσσαλία">Θεσσαλία</option>
+            <option value="Ιόνιοι Νήσοι">Ιόνιοι Νήσοι</option>
+            <option value="Δυτική Ελλάδα">Δυτική Ελλάδα</option>
+            <option value="Στερεά Ελλάδα">Στερεά Ελλάδα</option>
+            <option value="Αττική">Αττική</option>
+            <option value="Πελοπόννησος">Πελοπόννησος</option>
+            <option value="Βόρειο Αιγαίο">Βόρειο Αιγαίο</option>
+            <option value="Νότιο Αιγαίο">Νότιο Αιγαίο</option>
+            <option value="Κρήτη">Κρήτη</option>
+        </select>
+      </div>  
+ 
+      <button type="submit" class="btn btn-primary">Αποστολή</button>
+    </form>
+    </form>
+</div>
 
+<?php
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+    
+  if(empty(trim($_POST["place"]))){
+      $place_err = "Please enter your location.";     
+  } 
+  else{
+      $place = trim($_POST["place"]);
+  }
+  
+  // Check input errors before inserting in database
+  if(empty($place_err)){
+      
+      // Prepare an insert statement
+      $sql = "SELECT firstname, lastname, email, phone, address FROM vet INNER JOIN user ON vet_id = id WHERE user.place = '$place' ";
+      $result = mysqli_query($db, $sql);
+
+      if(mysqli_num_rows($result) > 0 ){
+          // output data of each row
+          while($row = mysqli_fetch_assoc($result)){
+        echo "Όνομα: " . $row["firstname"]. "<br>" ;
+        echo "Επίθετο: " . $row["lastname"]. "<br>" ;
+        echo "email:  " . $row["email"]. "<br>" ;
+        echo "Διεύθυνση: " . $row["address"]. "<br>";
+        echo "Τηλέφωνο: " . $row["phone"]. "<br>"; 
+        echo "<br>";
+       }
+      } 
+      else {
+        echo "0 results";
+       }
+    }
+       
+  }
+  
+  // Close connection
+  mysqli_close($db);
+
+?>
 <!-- Container (Contact Section) -->
 <div id="contact" class="container-fluid bg-grey">
   <h2 class="text-center">ΕΠΙΚΟΙΝΩΝΙΑ</h2>
@@ -469,17 +537,14 @@
     </div>
   </div>
 </div>
-
 <!-- Image of location/map -->
 <img src="./src/location.png" class="w3-image w3-greyscale-min" style="width:100%">
-
 <footer class="container-fluid text-center">
   <a href="#myPage" title="To Top">
     <span class="glyphicon glyphicon-chevron-up"></span>
   </a>
   <p>Project Τεχνολογίας Λογισμικού 2021</a></p>
 </footer>
-
 <script>
 $(document).ready(function(){
   // Add smooth scrolling to all links in navbar + footer link
@@ -488,10 +553,8 @@ $(document).ready(function(){
     if (this.hash !== "") {
       // Prevent default anchor click behavior
       event.preventDefault();
-
       // Store hash
       var hash = this.hash;
-
       // Using jQuery's animate() method to add smooth page scroll
       // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
       $('html, body').animate({
@@ -507,7 +570,6 @@ $(document).ready(function(){
   $(window).scroll(function() {
     $(".slideanim").each(function(){
       var pos = $(this).offset().top;
-
       var winTop = $(window).scrollTop();
         if (pos < winTop + 600) {
           $(this).addClass("slide");
@@ -516,6 +578,5 @@ $(document).ready(function(){
   });
 })
 </script>
-
 </body>
 </html>
