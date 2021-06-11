@@ -6,6 +6,19 @@ define('DB_PASSWORD', '');
 define('DB_NAME', 'db_mimp');
 
 $db = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME) or die("Could not connect to database");
+//Define variables
+$firstname=$lastname=$day=$time=$place=$size="";
+
+// Processing form data when form is submitted
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+  $firstname=trim($_POST["firstname"]);
+  $lastname=trim($_POST["lastname"]);
+  $day=trim($_POST["day"]);
+  $time=trim($_POST["time"]);
+  $place=trim($_POST["place"]);
+  $size=trim($_POST["size"]);
+
+}
 ?>
 
 
@@ -253,7 +266,7 @@ border-color: #e90247;
     <h4>ΓΙΑ ΝΑ ΔΗΛΩΣΕΙΣ ΔΙΑΘΕΣΙΜΟΤΗΤΑ ΦΙΛΟΞΕΝΙΑΣ ΚΑΤΟΙΚΙΔΙΟΥ ΣΥΜΠΛΗΡΩΣΕ ΤΗΝ ΠΑΡΑΚΑΤΩ ΦΟΡΜΑ</h4>
     <form>
       <div class="form-group">
-        <label for="name">Όνομα</label>
+        <label for="firstname">Όνομα</label>
         <input type="name" class="form-control" id="InputName1" placeholder="Enter name">
       </div> 
       <div class="form-group">
@@ -353,3 +366,17 @@ border-color: #e90247;
   })
   </script>
 </body>
+
+<?php
+// Define variables 
+$place = "";
+
+// Processing form data when form is submitted
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+  if(empty(available_for_hosting)){
+    $sql="UPDATE user SET available_for_hosting = 1 WHERE firtsname='$firstname' AND lastname='$lastname' AND place='$place'"';
+    $result=my_sqli_query($db, $sql);
+  }
+}
+
+?>
