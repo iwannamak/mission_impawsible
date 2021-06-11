@@ -1,3 +1,90 @@
+<?php
+
+define('DB_SERVER', 'localhost');
+define('DB_USERNAME', 'root');
+define('DB_PASSWORD', '');
+define('DB_NAME', 'db_mimp');
+
+$db = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME) or die("Could not connect to database");
+ 
+// Define variables and initialize with empty values
+$email = $firstname = $lastname = $pro = $message = "";
+$email_err = $firstname_err = $lastname_err = $pro_err =  $message_err =  "";
+
+// Processing form data when form is submitted
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+    
+    if(empty(trim($_POST["email"]))){
+        $email_err = "Please enter your email.";     
+    } 
+    else{
+        $email = trim($_POST["email"]);
+    }
+  
+    if(empty(trim($_POST["firstname"]))){
+        $firstname_err = "Please enter your first name.";     
+    } 
+    else{
+        $firstname = trim($_POST["firstname"]);
+    }
+
+    if(empty(trim($_POST["lastname"]))){
+        $lastname_err = "Please enter your last name.";     
+    } 
+    else{
+        $lastname = trim($_POST["lastname"]);
+    }
+
+    if(empty(trim($_POST["pro"]))){
+        $pro_err = "Please enter whether you've participated in a charity event before.";     
+    } 
+    else{
+        $pro = trim($_POST["pro"]);
+    }
+   
+    if(empty(trim($_POST["message"]))){
+        $message_err = "Please write a message.";     
+    } 
+    else{
+        $message = trim($_POST["message"]);
+    }
+
+   
+    // Check input errors before inserting in database
+    if(empty($email_err) && empty($firstname_err) && empty($lastname_err) && empty($pro_err) && empty($message_err)){
+        
+        // Prepare an insert statement
+        $sql = "INSERT INTO draseis_form (email, firstname, lastname, pro, message) VALUES (?,?,?,?,?)";
+         
+        if($stmt = mysqli_prepare($db, $sql)){
+            // Bind variables to the prepared statement as parameters
+            mysqli_stmt_bind_param($stmt, "sssss", $param_email, $param_firstname, $param_lastname, $param_pro, $param_message);
+            
+            // Set parameters
+            $param_email = $email;
+            $param_firstname = $firstname;
+            $param_lastname = $lastname;
+            $param_pro = $pro;
+            $param_message = $message;
+          
+            // Attempt to execute the prepared statement
+            if(mysqli_stmt_execute($stmt)){
+                // Redirect to login page
+                header("location: draseis_form.php");
+            } else{
+                echo "Oops! Something went wrong. Please try again later.";
+            }
+
+            // Close statement
+            mysqli_stmt_close($stmt);
+        }
+    }
+    
+    // Close connection
+    mysqli_close($db);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -234,22 +321,48 @@ border-color: #e90247;
       </div>
     </div>
   </nav>
+
     <!-- Container (Services Section) -->
-<div id="services" class="container-fluid text-center">
-    <h2>Φιλοζωικές δράσεις</h2>
+<div class="container">
+    <h2>Φόρμα Επικοινωνίας</h2>
     <br>
     <h2>VETS IN ACTION - Σέριφος</h2>
-    <img style="height: 450px; width: 300px" src="./src/serifos.jpg" alt="vetsinaction">
-    <h4>Οι δύο κτηνίατροι της Vets In Action σας καλούν στις 3 Ιουλίου στη Σέριφο να συμμετάσχετε στο εθελοντικό πρόγραμμα μαζικής
-        στείρωσης αδέσποτων ζώων. Το πρόγραμμα, το οποίο διοργανώνεται από το μέλος ΔΣ της Ομοσπονδίας μας Ζ.Κοντού, θα αποτελέσει μια τεράστια 
-        βοήθεια για τον πληθυσμό των αδέσποτων γατών στο νησί, καθώς τα τελευταία 2 χρόνια δεν υπάρχει καμία μέριμνα από το δήμο.
-    </h4>
-    <h4>Kατά τη διάρκεια του προγράμματος θα πραγματοποιηθούν επίσης συναντήσεις με το νεο διοικητή του ΑΤ Σερίφου, Χ.Εμμανουηλίδη όπου θα συζητηθούν 
-        όλα τα θέματα των ζώων που απασχολούν το νησί καθώς κ με το λιμενάρχη Θ. Ραπτόπουλο. Ζητάμε την εθελοντική σας
-        βοήθεια για τον εμβολιασμό κατά της λύσσας, τον αποπαρασιτισμό, τη στείρωση και την επανένταξη των γατών.</h4>
-
-    <button type="button" class="btn btn-default"><a href="draseis_form.php">Συμμετάσχετε στη Δράση</a></button>
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+            
+          <div class="form-group">
+                <label>Email</label>
+                <input type="text" name="email" class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $email; ?>">
+                <span class="invalid-feedback"><?php echo $email_err; ?></span>
+            </div>
+            <div class="form-group">
+                <label>First Name</label>
+                <input type="text" name="firstname" class="form-control <?php echo (!empty($firstname_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $firstname; ?>">
+                <span class="invalid-feedback"><?php echo $firstname_err; ?></span>
+            </div>
+            <div class="form-group">
+                <label>Last name</label>
+                <input type="text" name="lastname" class="form-control <?php echo (!empty($lastname_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $lastname; ?>">
+                <span class="invalid-feedback"><?php echo $lastname_err; ?></span>
+            </div>    
+             <div class="form-group">
+                <label>Έχετε ξαναϋπάρξει εθελοντής;</label>
+                <select  name="pro" class="form-control<?php echo (!empty($pro_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $pro; ?>">
+                 <span class="invalid-feedback"><?php echo $pro_err; ?></span>
+                        <option value="yes">ναι</option>
+                        <option value="no">όχι</option>
+                </select>
+             </div>
+             <div class="form-group">
+                <label>Πείτε μας πού μπορείτε να βοηθήσετε και αν έχετε ερωτήσεις</label>
+                <input type="text" name="message" class="form-control<?php echo (!empty($message_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $message; ?>">
+                <span class="invalid-feedback"><?php echo $message_err; ?></span>
+             </div>
+             <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Submit">
+                <input type="reset" class="btn btn-secondary ml-2" value="Reset">
+            </div>
 </div>
+
 <footer class="container-fluid text-center">
     <a href="#myPage" title="To Top">
       <span class="glyphicon glyphicon-chevron-up"></span>
