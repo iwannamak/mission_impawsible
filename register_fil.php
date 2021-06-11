@@ -8,8 +8,8 @@ define('DB_NAME', 'db_mimp');
 $db = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME) or die("Could not connect to database");
  
 // Define variables and initialize with empty values
-$shelter_name = $username = $email = $password = $confirm_password = $phone = $address = "";
-$shelter_name_err = $username_err = $email_err = $password_err = $confirm_password_err = $phone_err = $address_err = "";
+$shelter_name = $username = $email = $password = $confirm_password = $phone = $address = $place = "";
+$shelter_name_err = $username_err = $email_err = $password_err = $confirm_password_err = $phone_err = $address_err = $place = "";
 
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -95,16 +95,24 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     else{
         $address = trim($_POST["address"]);
     }
+
+    if(empty(trim($_POST["place"]))){
+        $place_err = "Please select your area.";     
+    } 
+    else{
+        $place = trim($_POST["place"]);
+    }
+    
     
     // Check input errors before inserting in database
-    if(empty($shelter_name_err) && empty($username_err) && empty($email_err) && empty($password_err) && empty($confirm_password_err) && empty($phone_err) && empty($address_err)){
+    if(empty($shelter_name_err) && empty($username_err) && empty($email_err) && empty($password_err) && empty($confirm_password_err) && empty($phone_err) && empty($address_err) && empty($place_err)){
         
         // Prepare an insert statement
-        $sql = "INSERT INTO animal_shelter (shelter_name, username, email, password, phone, address) VALUES (?,?,?,?,?,?)";
+        $sql = "INSERT INTO animal_shelter (shelter_name, username, email, password, phone, address, place) VALUES (?,?,?,?,?,?,?)";
          
         if($stmt = mysqli_prepare($db, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "ssssss", $param_shelter_name, $param_username, $param_email, $param_password, $param_phone, $param_address);
+            mysqli_stmt_bind_param($stmt, "sssssss", $param_shelter_name, $param_username, $param_email, $param_password, $param_phone, $param_address, $param_place);
             
             // Set parameters
             $param_shelter_name = $shelter_name;
@@ -113,6 +121,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
             $param_phone = $phone;
             $param_address = $address;
+            $param_place = $place;
             
 
             
@@ -357,8 +366,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="advice.html">Χρήσιμες συμβουλές</a></li>
-              <li><a href="ktiniatroi.html">Κτηνίατροι</a></li>
-              <li><a href="ekpaideutes.html">Εκπαιδευτές</a></li>
+              <li><a href="ktiniatroi.php">Κτηνίατροι</a></li>
+              <li><a href="ekpaideutes.php">Εκπαιδευτές</a></li>
               <li><a href="donation.html">Δωρεές</a></li>
               <li><a href="forum.html">Forum</a></li>
               <li><a href="draseis.html">Δράσεις</a></li>
@@ -415,6 +424,25 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <input type="text" name="address" class="form-control <?php echo (!empty($address_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $address; ?>">
                 <span class="invalid-feedback"><?php echo $address_err; ?></span>
             </div>
+            <div class="form-group">
+        <label>Περιοχή</label>
+        <select  name="place" class="form-control<?php echo (!empty($place_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $place; ?>">
+        <span class="invalid-feedback"><?php echo $place_err; ?></span>
+            <option value="Ανατολική Μακεδονία και Θράκη">Ανατολική Μακεδονία και Θράκη</option>
+            <option value="Κεντρική Μακεδονία">Κεντρική Μακεδονία</option>
+            <option value="Δυτική Μακεδονία">Δυτική Μακεδονία</option>
+            <option value="Ήπειρος">Ήπειρος</option>
+            <option value="Θεσσαλία">Θεσσαλία</option>
+            <option value="Ιόνιοι Νήσοι">Ιόνιοι Νήσοι</option>
+            <option value="Δυτική Ελλάδα">Δυτική Ελλάδα</option>
+            <option value="Στερεά Ελλάδα">Στερεά Ελλάδα</option>
+            <option value="Αττική">Αττική</option>
+            <option value="Πελοπόννησος">Πελοπόννησος</option>
+            <option value="Βόρειο Αιγαίο">Βόρειο Αιγαίο</option>
+            <option value="Νότιο Αιγαίο">Νότιο Αιγαίο</option>
+            <option value="Κρήτη">Κρήτη</option>
+        </select>
+      </div>  
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Submit">
                 <input type="reset" class="btn btn-secondary ml-2" value="Reset">

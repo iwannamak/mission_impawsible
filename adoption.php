@@ -226,15 +226,15 @@ $age = $sex = $size = "";
         <ul class="nav navbar-nav navbar-right">
           <li><a href="mipstart.html">Αρχική</a></li>
           <li><a href="#about">Ποιοι είμαστε</a></li>
-          <li><a href="login.html">Εγγραφή/Σύνδεση</a></li>
+          <li><a href="login.php">Εγγραφή/Σύνδεση</a></li>
           <ul class="nav navbar-nav">
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#more">Περισσότερα
               <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="advice.html">Χρήσιμες συμβουλές</a></li>
-                <li><a href="ktiniatroi.html">Κτηνίατροι</a></li>
-                <li><a href="ekpaideutes.html">Εκπαιδευτές</a></li>
+                <li><a href="ktiniatroi.php">Κτηνίατροι</a></li>
+                <li><a href="ekpaideutes.php">Εκπαιδευτές</a></li>
                 <li><a href="donation.html">Δωρεές</a></li>
                 <li><a href="forum.html">Forum</a></li>
                 <li><a href="draseis.html">Δράσεις</a></li>

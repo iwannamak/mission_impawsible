@@ -346,8 +346,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
             <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="advice.html">Χρήσιμες συμβουλές</a></li>
-              <li><a href="ktiniatroi.html">Κτηνίατροι</a></li>
-              <li><a href="ekpaideutes.html">Εκπαιδευτές</a></li>
+              <li><a href="ktiniatroi.php">Κτηνίατροι</a></li>
+              <li><a href="ekpaideutes.php">Εκπαιδευτές</a></li>
               <li><a href="donation.html">Δωρεές</a></li>
               <li><a href="forum.html">Forum</a></li>
               <li><a href="draseis.html">Δράσεις</a></li>
@@ -382,7 +382,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     </div>
     <input type="submit" class="btn btn-primary" value="Login">
     <span class="invalid-feedback"><?php echo $login_err; ?></span>
-    <button type="button" class="btn btn-default"><a href="file:///C:/xampp/htdocs/mission_impawsible/register_xr.php">I don't have an account</a></button>
+    <button type="button" class="btn btn-default"><a href="register_xr.php">I don't have an account</a></button>
     <button type="button" class="btn btn-link">I forgot my password</button>
   </form>
 </div>

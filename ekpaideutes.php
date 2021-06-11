@@ -1,3 +1,13 @@
+<?php
+
+define('DB_SERVER', 'localhost');
+define('DB_USERNAME', 'root');
+define('DB_PASSWORD', '');
+define('DB_NAME', 'db_mimp');
+
+$db = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME) or die("Could not connect to database");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -441,7 +451,75 @@
   </div>
 </div>
 
+<div class="container">
+    <h2>ΕΚΠΑΙΔΕΥΤΕΣ ΚΟΝΤΑ ΣΑΣ</h2>
+    <br>
+    <h4>Βρείτε εκπαιδευτές κοντά σας</h4>
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+      <div class="form-group">
+        <label>Διαλέξτε Περιοχή</label>
+        <select  name="place" class="form-control<?php echo (!empty($place_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $place; ?>">
+        <span class="invalid-feedback"><?php echo $place_err; ?></span>
+            <option value="Ανατολική Μακεδονία και Θράκη">Ανατολική Μακεδονία και Θράκη</option>
+            <option value="Κεντρική Μακεδονία">Κεντρική Μακεδονία</option>
+            <option value="Δυτική Μακεδονία">Δυτική Μακεδονία</option>
+            <option value="Ήπειρος">Ήπειρος</option>
+            <option value="Θεσσαλία">Θεσσαλία</option>
+            <option value="Ιόνιοι Νήσοι">Ιόνιοι Νήσοι</option>
+            <option value="Δυτική Ελλάδα">Δυτική Ελλάδα</option>
+            <option value="Στερεά Ελλάδα">Στερεά Ελλάδα</option>
+            <option value="Αττική">Αττική</option>
+            <option value="Πελοπόννησος">Πελοπόννησος</option>
+            <option value="Βόρειο Αιγαίο">Βόρειο Αιγαίο</option>
+            <option value="Νότιο Αιγαίο">Νότιο Αιγαίο</option>
+            <option value="Κρήτη">Κρήτη</option>
+        </select>
+      </div>  
+ 
+      <button type="submit" class="btn btn-primary">Αποστολή</button>
+    </form>
+    </form>
+</div>
 
+<?php
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+    
+  if(empty(trim($_POST["place"]))){
+      $place_err = "Please enter your location.";     
+  } 
+  else{
+      $place = trim($_POST["place"]);
+  }
+  
+  // Check input errors before inserting in database
+  if(empty($place_err)){
+      
+      // Prepare an insert statement
+      $sql = "SELECT firstname, lastname, email, phone, address FROM trainer INNER JOIN user ON trainer_id = id WHERE user.place = '$place' ";
+      $result = mysqli_query($db, $sql);
+
+      if(mysqli_num_rows($result) > 0 ){
+          // output data of each row
+          while($row = mysqli_fetch_assoc($result)){
+        echo "Όνομα: " . $row["firstname"]. "<br>" ;
+        echo "Επίθετο: " . $row["lastname"]. "<br>" ;
+        echo "email:  " . $row["email"]. "<br>" ;
+        echo "Διεύθυνση: " . $row["address"]. "<br>";
+        echo "Τηλέφωνο: " . $row["phone"]. "<br>"; 
+        echo "<br>";
+       }
+      } 
+      else {
+        echo "0 results";
+       }
+    }
+       
+  }
+  
+  // Close connection
+  mysqli_close($db);
+
+?>
 <!-- Container (Contact Section) -->
 <div id="contact" class="container-fluid bg-grey">
   <h2 class="text-center">ΕΠΙΚΟΙΝΩΝΙΑ</h2>
