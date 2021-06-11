@@ -137,7 +137,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
  <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Theme Made By www.w3schools.com -->
+
   <title>Mission ImPAWssible</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -336,7 +336,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 </head>
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
 
-  <nav class="navbar navbar-default">
+<nav class="navbar navbar-default">
     <div class="container">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -344,7 +344,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="mipstart.html"><img style="height: 250px; width: 250px" src="./src/missionbw.png"><p style="font-size: 25pt">Mission ImPAWssible</p></a>
+        <a class="navbar-brand" href="mipstart.html"><img style="height: 250px; width: 250px" src="./src/missionbw.png"></a>
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav navbar-right">
@@ -362,18 +362,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
               <li><a href="donation.html">Δωρεές</a></li>
               <li><a href="forum.html">Forum</a></li>
               <li><a href="draseis.html">Δράσεις</a></li>
-
             </ul>
           </li> 
         </ul>
+        <a href="logout.php" class="btn btn-info">
+          <span class="glyphicon glyphicon-log-out"></span> Log out
+        </a>
         </ul>
       </div>
-      <form class="navbar-form navbar-right" action="/action_page.php">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
-        </div>
-        <button type="submit" class="btn btn-default">Search</button>
-      </form>
     </div>
   </nav>
 <body>

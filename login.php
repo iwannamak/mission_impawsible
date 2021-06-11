@@ -325,7 +325,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
   </style>
 </head>
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
-  <nav class="navbar navbar-default">
+<nav class="navbar navbar-default">
     <div class="container">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -333,14 +333,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#myPage"><img style="height: 250px; width: 250px" src="./src/missionbw.png"><p style="font-size: 25pt">Mission ImPAWssible</p></a>
+        <a class="navbar-brand" href="mipstart.html"><img style="height: 250px; width: 250px" src="./src/missionbw.png"></a>
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav navbar-right">
-
-        <li><a href="#myPage">Αρχική</a></li>
-        <li><a href="#about">Ποιοι είμαστε</a></li>
-        <li><a href="login.html">Εγγραφή/Σύνδεση</a></li>
+        <li><a href="mipstart.html">Αρχική</a></li>
+        <li><a href="mipstart.html">Ποιοι είμαστε</a></li>
+        <li><a href="login.php">Εγγραφή/Σύνδεση</a></li>
         <ul class="nav navbar-nav">
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#more">Περισσότερα
@@ -352,18 +351,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
               <li><a href="donation.html">Δωρεές</a></li>
               <li><a href="forum.html">Forum</a></li>
               <li><a href="draseis.html">Δράσεις</a></li>
-              
             </ul>
           </li> 
         </ul>
+        <a href="logout.php" class="btn btn-info">
+          <span class="glyphicon glyphicon-log-out"></span> Log out
+        </a>
         </ul>
       </div>
-      <form class="navbar-form navbar-right" action="/action_page.php">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
-        </div>
-        <button type="submit" class="btn btn-default">Search</button>
-      </form>
     </div>
   </nav>
 
