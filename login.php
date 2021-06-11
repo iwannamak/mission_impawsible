@@ -382,7 +382,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     </div>
     <input type="submit" class="btn btn-primary" value="Login">
     <span class="invalid-feedback"><?php echo $login_err; ?></span>
-    <button type="button" class="btn btn-default"><a href="file:///C:/xampp/htdocs/mission_impawsible/register_xr.php">I don't have an account</a></button>
+    <button type="button" class="btn btn-default"><a href="register_xr.php">I don't have an account</a></button>
     <button type="button" class="btn btn-link">I forgot my password</button>
   </form>
 </div>
