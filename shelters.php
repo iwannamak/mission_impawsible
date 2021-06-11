@@ -1,3 +1,13 @@
+<?php
+
+define('DB_SERVER', 'localhost');
+define('DB_USERNAME', 'root');
+define('DB_PASSWORD', '');
+define('DB_NAME', 'db_mimp');
+
+$db = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME) or die("Could not connect to database");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -222,6 +232,7 @@ border-color: #e90247;
             <li><a href="donation.html">Δωρεές</a></li>
             <li><a href="forum.html">Forum</a></li>
             <li><a href="draseis.html">Δράσεις</a></li>
+            <li><a href="shelters.php">Φιλοζωικές Κοντά Σας</a></li>
           </ul>
         </li> 
       </ul>
@@ -235,42 +246,14 @@ border-color: #e90247;
 
     <!-- Container (Services Section) -->
 <div class="container">
-    <h2>ΦΟΡΜΑ ΚΑΤΑΧΩΡΗΣΗΣ ΝΕΟΥ ΚΑΤΟΙΚΙΔΙΟΥ</h2>
+    <h2>ΦΙΛΟΖΩΙΚΕΣ ΚΟΝΤΑ ΣΑΣ</h2>
     <br>
-    <h4>ΓΙΑ ΝΑ ΚΑΤΑΧΩΡΗΣΕΙΣ ΕΝΑ ΖΩΑΚΙ ΠΡΟΣ ΥΙΟΘΕΣΙΑ ΣΥΜΠΛΗΡΩΣΕ ΤΗΝ ΠΑΡΑΚΑΤΩ ΦΟΡΜΑ ΜΕ ΤΑ ΣΤΟΙΧΕΙΑ ΤΟΥ</h4>
-    <form>
+    <h4>Βρείτε φιλοζωικές κοντά σας</h4>
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
       <div class="form-group">
-        <label for="name">Όνομα</label>
-        <input type="name" class="form-control" id="InputName1" placeholder="Enter name">
-      </div>
-      <div class="form-group">
-        <label for="age">Ηλικία</label>
-        <input type="number" class="form-control" id="InputAge1" placeholder="Enter age">
-      </div>
-      <div class="form-group">
-        <label for="sex">Φύλο</label>
-        <select  name="dropdown" class="form-control" id="sex">
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="race">Ράτσα</label>
-        <input type="text" class="form-control" id="InputRace1" placeholder="Enter race">
-      </div>
-      <div class="form-group">
-        <label for="color">Χρώμα</label>
-        <select  name="dropdown" class="form-control" id="color">
-            <option value="white">Άσπρο</option>
-            <option value="black">Μαύρο</option>
-            <option value="grey">Γκρι</option>
-            <option value="brown">Καφέ</option>
-            <option value="black_white">Ασπρόμαυρο</option>
-        </select>
-      </div>  
-      <div class="form-group">
-        <label for="place">Περιοχή</label>
-        <select  name="dropdown" class="form-control" id="place">
+        <label>Διαλέξτε Περιοχή</label>
+        <select  name="place" class="form-control<?php echo (!empty($place_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $place; ?>">
+        <span class="invalid-feedback"><?php echo $place_err; ?></span>
             <option value="Ανατολική Μακεδονία και Θράκη">Ανατολική Μακεδονία και Θράκη</option>
             <option value="Κεντρική Μακεδονία">Κεντρική Μακεδονία</option>
             <option value="Δυτική Μακεδονία">Δυτική Μακεδονία</option>
@@ -286,68 +269,52 @@ border-color: #e90247;
             <option value="Κρήτη">Κρήτη</option>
         </select>
       </div>  
-      <div class="form-group">
-        <label for="size">Μέγεθος</label>
-        <select  name="dropdown" class="form-control" id="size">
-            <option value="small">Small</option>
-            <option value="medium">Medium</option>
-            <option value="large">Large</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="health_problems">Προβλήματα Υγείας</label>
-        <input type="text" class="form-control" id="InputH1" placeholder="Enter Health Problems">
-      </div>
-      <div class="form-group">
-        <label for="description">Περιγραφή</label>
-        <input type="text" class="form-control" id="InputDescription1" placeholder="Enter Description">
-      </div>
-
+ 
       <button type="submit" class="btn btn-primary">Αποστολή</button>
+    </form>
     </form>
 </div>
 
-<footer class="container-fluid text-center">
-    <a href="#myPage" title="To Top">
-      <span class="glyphicon glyphicon-chevron-up"></span>
-    </a>
-    <p>Project Τεχνολογίας Λογισμικού 2021</a></p>
-  </footer>
-  
-  <script>
-  $(document).ready(function(){
-    // Add smooth scrolling to all links in navbar + footer link
-    $(".navbar a, footer a[href='#myPage']").on('click', function(event) {
-      // Make sure this.hash has a value before overriding default behavior
-      if (this.hash !== "") {
-        // Prevent default anchor click behavior
-        event.preventDefault();
-  
-        // Store hash
-        var hash = this.hash;
-  
-        // Using jQuery's animate() method to add smooth page scroll
-        // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
-        $('html, body').animate({
-          scrollTop: $(hash).offset().top
-        }, 900, function(){
-     
-          // Add hash (#) to URL when done scrolling (default click behavior)
-          window.location.hash = hash;
-        });
-      } // End if
-    });
+<?php
+// Define variables and initialize with empty values
+$place = "";
+$place_err = "";
+
+// Processing form data when form is submitted
+if($_SERVER["REQUEST_METHOD"] == "POST"){
     
-    $(window).scroll(function() {
-      $(".slideanim").each(function(){
-        var pos = $(this).offset().top;
-  
-        var winTop = $(window).scrollTop();
-          if (pos < winTop + 600) {
-            $(this).addClass("slide");
-          }
-      });
-    });
-  })
-  </script>
-</body>
+    if(empty(trim($_POST["place"]))){
+        $place_err = "Please enter your location.";     
+    } 
+    else{
+        $place = trim($_POST["place"]);
+    }
+    
+    // Check input errors before inserting in database
+    if(empty($place_err)){
+        
+        // Prepare an insert statement
+        $sql = "SELECT shelter_name, email, place, phone, address FROM animal_shelter  WHERE place = '$place' ";
+        $result = mysqli_query($db, $sql);
+
+        if(mysqli_num_rows($result) > 0 ){
+            // output data of each row
+            while($row = mysqli_fetch_assoc($result)){
+          echo "Όνομα: " . $row["shelter_name"]. "<br>" ;
+          echo "email:  " . $row["email"]. "<br>" ;
+          echo "Διεύθυνση: " . $row["address"]. "<br>";
+          echo "Τηλέφωνο: " . $row["phone"]. "<br>"; 
+          echo "<br>";
+         }
+        } 
+        else {
+          echo "0 results";
+         }
+      }
+         
+    }
+    
+    // Close connection
+    mysqli_close($db);
+
+?>
