@@ -196,78 +196,83 @@ border-color: #e90247;
 }
 </style>
 </head>
-<nav class="navbar navbar-default">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="mipstart.html"><img style="height: 250px; width: 250px" src="./src/missionbw.png"></a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav navbar-right">
-      <li><a href="mipstart.html">Αρχική</a></li>
-      <li><a href="mipstart.html">Ποιοι είμαστε</a></li>
-      <li><a href="login.php">Εγγραφή/Σύνδεση</a></li>
-      <ul class="nav navbar-nav">
-        <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#more">Περισσότερα
-          <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="advice.html">Χρήσιμες συμβουλές</a></li>
-            <li><a href="ktiniatroi.html">Κτηνίατροι</a></li>
-            <li><a href="ekpaideutes.html">Εκπαιδευτές</a></li>
-            <li><a href="donation.html">Δωρεές</a></li>
-            <li><a href="forum.html">Forum</a></li>
-            <li><a href="draseis.html">Δράσεις</a></li>
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+
+    <nav class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+
+          <a class="navbar-brand" href="mipstart.html"><img style="height: 250px; width: 250px" src="./src/missionbw.png"></a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav navbar-right">
+          <li><a href="mipstart.html">Αρχική</a></li>
+
+          <li><a href="#about">Ποιοι είμαστε</a></li>
+          <li><a href="#login">Εγγραφή/Σύνδεση</a></li>
+          <ul class="nav navbar-nav">
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#more">Περισσότερα
+              <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+
+                <li><a href="advice.html">Χρήσιμες συμβουλές</a></li>
+                <li><a href="#vets">Κτηνίατροι</a></li>
+                <li><a href="#trainers">Εκπαιδευτές</a></li>
+                <li><a href="#donations">Δωρεές</a></li>
+                <li><a href="forum.html">Forum</a></li>
+                <li><a href="forum.html">Δράσεις</a></li>
+
+              </ul>
+            </li> 
           </ul>
-        </li> 
-      </ul>
-      <a href="logout.php" class="btn btn-info">
-        <span class="glyphicon glyphicon-log-out"></span> Log out
-      </a>
-      </ul>
-    </div>
-  </div>
-</nav>
+          </ul>
+        </div>
+        <form class="navbar-form navbar-right" action="./src/action_page.php">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search">
+          </div>
+          <button type="submit" class="btn btn-default">Search</button>
+        </form>
+      </div>
+    </nav>
 
     <!-- Container (Services Section) -->
 <div class="container">
-    <h2>ΦΟΡΜΑ ΚΑΤΑΧΩΡΗΣΗΣ ΝΕΟΥ ΚΑΤΟΙΚΙΔΙΟΥ</h2>
+    <h2>ΦΟΡΜΑ ΔΗΛΩΣΗΣ ΦΙΛΟΞΕΝΙΑΣ</h2>
     <br>
-    <h4>ΓΙΑ ΝΑ ΚΑΤΑΧΩΡΗΣΕΙΣ ΕΝΑ ΖΩΑΚΙ ΠΡΟΣ ΥΙΟΘΕΣΙΑ ΣΥΜΠΛΗΡΩΣΕ ΤΗΝ ΠΑΡΑΚΑΤΩ ΦΟΡΜΑ ΜΕ ΤΑ ΣΤΟΙΧΕΙΑ ΤΟΥ</h4>
+    <h4>ΓΙΑ ΝΑ ΔΗΛΩΣΕΙΣ ΔΙΑΘΕΣΙΜΟΤΗΤΑ ΦΙΛΟΞΕΝΙΑΣ ΚΑΤΟΙΚΙΔΙΟΥ ΣΥΜΠΛΗΡΩΣΕ ΤΗΝ ΠΑΡΑΚΑΤΩ ΦΟΡΜΑ</h4>
     <form>
       <div class="form-group">
         <label for="name">Όνομα</label>
         <input type="name" class="form-control" id="InputName1" placeholder="Enter name">
-      </div>
+      </div> 
       <div class="form-group">
-        <label for="age">Ηλικία</label>
-        <input type="number" class="form-control" id="InputAge1" placeholder="Enter age">
-      </div>
+        <label for="lastname">Επώνυμο</label>
+        <input type="lastname" class="form-control" id="InputName1" placeholder="Enter lastname">
+      </div>   
       <div class="form-group">
-        <label for="sex">Φύλο</label>
-        <select  name="dropdown" class="form-control" id="sex">
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="race">Ράτσα</label>
-        <input type="text" class="form-control" id="InputRace1" placeholder="Enter race">
-      </div>
-      <div class="form-group">
-        <label for="color">Χρώμα</label>
-        <select  name="dropdown" class="form-control" id="color">
-            <option value="white">Άσπρο</option>
-            <option value="black">Μαύρο</option>
-            <option value="grey">Γκρι</option>
-            <option value="brown">Καφέ</option>
-            <option value="black_white">Ασπρόμαυρο</option>
-        </select>
+        <label for="day">Ημέρες Διαθεσιμότητας</label><br>
+        <input type="checkbox" name="day" value="monday"> Δευτέρα<br>
+        <input type="checkbox" name="day" value="tuesday"> Τρίτη<br>
+        <input type="checkbox" name="day" value="wednesday"> Τετάρτη<br>
+        <input type="checkbox" name="day" value="thursday"> Πέμπτη<br>
+        <input type="checkbox" name="day" value="friday"> Παρασκευή<br>
+        <input type="checkbox" name="day" value="saturday"> Σάββατο<br>
+        <input type="checkbox" name="day" value="sunday"> Κυριακή<br>
       </div>  
+      <label for="appt">Ώρες Διαθεσιμότητας:</label>
+
+      <input type="time" id="start_time" name="start_time"
+             min="09:00" max="21:00" required>
+             <input type="time" id="end_time" name="end_time"
+             min="09:00" max="21:00" required>
+
       <div class="form-group">
         <label for="place">Περιοχή</label>
         <select  name="dropdown" class="form-control" id="place">
@@ -285,22 +290,15 @@ border-color: #e90247;
             <option value="Νότιο Αιγαίο">Νότιο Αιγαίο</option>
             <option value="Κρήτη">Κρήτη</option>
         </select>
-      </div>  
+      </div>
+      
       <div class="form-group">
-        <label for="size">Μέγεθος</label>
+        <label for="size">Μέγεθος Κατοικιδίου</label>
         <select  name="dropdown" class="form-control" id="size">
             <option value="small">Small</option>
             <option value="medium">Medium</option>
             <option value="large">Large</option>
         </select>
-      </div>
-      <div class="form-group">
-        <label for="health_problems">Προβλήματα Υγείας</label>
-        <input type="text" class="form-control" id="InputH1" placeholder="Enter Health Problems">
-      </div>
-      <div class="form-group">
-        <label for="description">Περιγραφή</label>
-        <input type="text" class="form-control" id="InputDescription1" placeholder="Enter Description">
       </div>
 
       <button type="submit" class="btn btn-primary">Αποστολή</button>
