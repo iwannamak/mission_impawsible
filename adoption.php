@@ -238,6 +238,7 @@ $age = $sex = $size = "";
                 <li><a href="donation.html">Δωρεές</a></li>
                 <li><a href="forum.html">Forum</a></li>
                 <li><a href="draseis.html">Δράσεις</a></li>
+                <li><a href="shelters.php">Φιλοζωικές Κοντά Σας</a></li>
             </ul>
           </li> 
         </ul>
